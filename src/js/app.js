@@ -179,6 +179,18 @@ class AILearningApp {
         }
 
         contentBody.innerHTML = html;
+
+        // 代码高亮
+        this.highlightCode();
+    }
+
+    highlightCode() {
+        // 使用 highlight.js 高亮代码块
+        if (typeof hljs !== 'undefined') {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        }
     }
 
     renderMarkdown(content) {

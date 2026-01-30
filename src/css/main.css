@@ -325,27 +325,38 @@ body {
 
 /* 代码块 */
 .markdown-content pre {
-    background: #1e1e3f;
-    color: #e4e4e7;
-    padding: 20px;
+    background: #282c34;
     border-radius: 8px;
     overflow-x: auto;
     margin: 20px 0;
-    font-family: 'Fira Code', 'Consolas', monospace;
-    font-size: 0.9em;
-    line-height: 1.5;
+    padding: 0;
+}
+
+.markdown-content pre code {
+    display: block;
+    padding: 20px;
+    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: 0.85em;
+    line-height: 1.6;
+    tab-size: 4;
 }
 
 .markdown-content code {
-    font-family: 'Fira Code', 'Consolas', monospace;
+    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
 }
 
-.markdown-content p code {
+.markdown-content p code,
+.markdown-content li code {
     background: rgba(102, 126, 234, 0.1);
     color: var(--primary-dark);
     padding: 2px 6px;
     border-radius: 4px;
-    font-size: 0.9em;
+    font-size: 0.85em;
+}
+
+/* highlight.js 主题覆盖 */
+.hljs {
+    background: #282c34 !important;
 }
 
 /* 表格 */
