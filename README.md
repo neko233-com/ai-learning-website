@@ -1,120 +1,123 @@
-# 🧠 多模态AI系统学习平台
+# 🧠 AI Learning Hub
 
 [![Deploy to GitHub Pages](https://github.com/neko233-com/ai-learning-website/actions/workflows/deploy.yml/badge.svg)](https://github.com/neko233-com/ai-learning-website/actions/workflows/deploy.yml)
 
-一个循序渐进学习多模态AI知识的交互式平台。
+系统学习AI知识的交互式平台，包含基础知识、代码实战和部署指南。
 
 ## 🌐 在线访问
 
 **[https://neko233-com.github.io/ai-learning-website/](https://neko233-com.github.io/ai-learning-website/)**
 
-## ✨ 功能特点
+## ✨ 特点
 
-- 📚 **系统化学习路径** - 10个章节，从基础到前沿循序渐进
-- 📊 **进度追踪** - 自动保存学习进度到本地存储
-- 🔓 **章节解锁机制** - 完成当前章节解锁下一章
-- 📝 **知识测验** - 每个知识点配备小测验巩固学习
-- 🏆 **成就系统** - 完成章节获得成就提示
-- 📱 **响应式设计** - 支持桌面和移动设备
-- 🌙 **美观UI** - 现代化渐变设计，毛玻璃效果
+- 📚 **分类清晰** - 基础知识 / 多模态AI / 部署优化 三大模块
+- 📖 **内容分层** - 每章包含：专业术语 → 基础概念 → 进阶知识 → 实战代码
+- 🎯 **实用性强** - 包含大量可运行的代码示例
+- 📱 **响应式设计** - 支持桌面和移动端
 
-## 📖 章节目录
+## 📖 内容目录
 
-| 章节 | 主题 | 知识点数量 |
-|------|------|------------|
-| 1 | 深度学习基础 | 5 |
-| 2 | 注意力机制与Transformer | 5 |
-| 3 | 预训练语言模型 | 5 |
-| 4 | 视觉Transformer与图像理解 | 5 |
-| 5 | 多模态大模型 | 5 |
-| 6 | 图像生成与扩散模型 | 5 |
-| 7 | 语音与音频AI | 5 |
-| 8 | 视频理解与生成 | 5 |
-| 9 | 模型优化与部署 | 5 |
-| 10 | 前沿话题与未来趋势 | 5 |
+### 基础知识
+| 章节 | 内容 |
+|------|------|
+| 深度学习基础 | 神经网络、反向传播、优化器、正则化 |
+| Transformer架构 | 注意力机制、多头注意力、位置编码 |
+| 大语言模型 | 预训练、微调、RLHF、Prompt工程 |
+
+### 多模态AI
+| 章节 | 内容 |
+|------|------|
+| 视觉理解 | ViT、CLIP、对比学习、零样本分类 |
+| 视觉语言模型 | LLaVA、GPT-4V、视觉指令微调 |
+| 图像生成 | 扩散模型、Stable Diffusion、ControlNet |
+| 语音与音频 | Whisper、TTS、语音克隆 |
+
+### 部署与优化
+| 章节 | 内容 |
+|------|------|
+| 模型优化 | 量化、剪枝、知识蒸馏、推理加速 |
+| 模型部署 | vLLM、Docker、K8s、负载均衡 |
 
 ## 🏗️ 项目结构
 
 ```
 ai-learning-website/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          # GitHub Actions 自动部署
+├── index.html                     # 主页面
 ├── src/
-│   ├── css/
-│   │   └── main.css            # 主样式文件
-│   ├── js/
-│   │   ├── app.js              # 主应用逻辑
-│   │   ├── storage.js          # 存储管理
-│   │   └── ui.js               # UI 渲染
-│   └── data/
-│       └── knowledge-base.json # 知识库数据
-├── assets/
-│   ├── images/                 # 图片资源
-│   └── icons/                  # 图标资源
+│   ├── css/main.css              # 样式文件
+│   ├── js/app.js                 # 应用逻辑
+│   └── data/knowledge-base.json  # 知识库数据
 ├── docs/
-│   └── LOCAL_MODEL_GUIDE.md    # 本地模型搭建指南
-├── index.html                  # 主页面
-├── README.md
-├── LICENSE
-└── .gitignore
+│   └── LOCAL_MODEL_GUIDE.md      # 本地模型指南
+├── scripts/
+│   ├── deploy.sh                 # Linux/Mac 部署脚本
+│   └── deploy.bat                # Windows 部署脚本
+└── .github/workflows/deploy.yml  # GitHub Actions
 ```
 
-## 🚀 本地运行
+## 🚀 一键部署
 
-### 方式一：直接打开
+### Windows
+```batch
+scripts\deploy.bat "feat: 添加新章节"
+```
 
-直接用浏览器打开 `index.html` 即可。
+### Linux/Mac
+```bash
+chmod +x scripts/deploy.sh
+./scripts/deploy.sh "feat: 添加新章节"
+```
 
-### 方式二：本地服务器（推荐）
+## 🛠️ 本地运行
 
 ```bash
-# 使用 Python
+# 方式1: 直接打开
+open index.html
+
+# 方式2: 本地服务器
 python -m http.server 8080
-
-# 或使用 Node.js
-npx serve .
-
-# 或使用 VS Code Live Server 插件
+# 访问 http://localhost:8080
 ```
 
-然后访问 `http://localhost:8080`
+## 📝 添加新内容
 
-## 🔧 技术栈
+编辑 `src/data/knowledge-base.json`：
 
-- **前端**: 原生 HTML5 + CSS3 + JavaScript (ES6+)
-- **样式**: CSS 变量 + Flexbox + Grid
-- **存储**: localStorage
-- **部署**: GitHub Pages + GitHub Actions
+```json
+{
+  "id": "new-chapter",
+  "title": "新章节",
+  "icon": "🆕",
+  "sections": {
+    "terminology": {
+      "title": "专业术语",
+      "items": [
+        {"term": "术语", "english": "Term", "desc": "描述"}
+      ]
+    },
+    "basic": {
+      "title": "基础概念",
+      "content": "### Markdown 内容"
+    },
+    "advanced": {
+      "title": "进阶知识",
+      "content": "### 进阶内容"
+    },
+    "practice": {
+      "title": "实战代码",
+      "content": "### 代码示例"
+    }
+  }
+}
+```
 
 ## 📚 相关资源
 
-- [本地特调模型实现指南](./docs/LOCAL_MODEL_GUIDE.md) - 如何搭建本地 AI 系统生成小说和二次元图片
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！
-
-### 添加新知识点
-
-1. 编辑 `src/data/knowledge-base.json`
-2. 按照现有格式添加新的 topic
-3. 确保包含：term, english, definition, tips, difficulty, quiz
-
-### 代码规范
-
-- CSS 使用 BEM 命名规范
-- JavaScript 使用 ES6+ 语法
-- 注释使用 JSDoc 格式
+- [本地特调模型实现指南](./docs/LOCAL_MODEL_GUIDE.md)
 
 ## 📄 License
 
-MIT License - 详见 [LICENSE](./LICENSE)
-
-## 🙏 致谢
-
-- 原始知识库参考：[multimodal-knowledge-game](https://sikickchen47.github.io/multimodal-knowledge-game/)
-- UI 设计灵感：现代化学习平台
+MIT
 
 ---
 

@@ -1,331 +1,290 @@
 /**
- * 多模态AI学习平台 - 主应用模块
- * @version 1.0.0
+ * AI学习平台 - 主应用 v2.0
+ * 左侧Tab垂直导航布局
  */
 
 class AILearningApp {
     constructor() {
-        this.knowledgeBase = null;
-        this.state = null;
-        this.initialized = false;
+        this.data = null;
+        this.currentCategory = null;
+        this.currentChapter = null;
+        this.currentSection = 'terminology';
     }
 
-    /**
-     * 初始化应用
-     */
     async init() {
         try {
-            // 显示加载状态
-            UIRenderer.showLoading();
-
-            // 加载知识库
-            await this.loadKnowledgeBase();
-
-            // 加载用户状态
-            this.state = StorageManager.load();
-
-            // 确保状态有效
-            this.validateState();
-
-            // 渲染界面
+            await this.loadData();
             this.render();
-
-            // 标记初始化完成
-            this.initialized = true;
-
-            console.log('AI Learning App initialized successfully');
+            this.bindEvents();
         } catch (error) {
-            console.error('Failed to initialize app:', error);
-            this.showError('应用初始化失败，请刷新页面重试');
-        }
-    }
-
-    /**
-     * 加载知识库数据
-     */
-    async loadKnowledgeBase() {
-        try {
-            const response = await fetch('./src/data/knowledge-base.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            this.knowledgeBase = await response.json();
-        } catch (error) {
-            console.error('Failed to load knowledge base:', error);
-            throw error;
-        }
-    }
-
-    /**
-     * 验证并修正状态
-     */
-    validateState() {
-        const chapters = this.knowledgeBase.chapters;
-
-        // 确保当前章节有效
-        if (this.state.currentChapter < 1 || this.state.currentChapter > chapters.length) {
-            this.state.currentChapter = 1;
-        }
-
-        // 确保当前知识点索引有效
-        const currentChapter = chapters.find(c => c.id === this.state.currentChapter);
-        if (this.state.currentTopicIndex >= currentChapter.topics.length) {
-            this.state.currentTopicIndex = 0;
-        }
-
-        // 确保第一章始终解锁
-        if (!this.state.unlockedChapters.includes(1)) {
-            this.state.unlockedChapters.push(1);
-        }
-
-        this.saveState();
-    }
-
-    /**
-     * 渲染整个界面
-     */
-    render() {
-        this.renderChapterNav();
-        this.renderContent();
-        this.updateProgress();
-    }
-
-    /**
-     * 渲染章节导航
-     */
-    renderChapterNav() {
-        UIRenderer.renderChapterNav(
-            this.knowledgeBase.chapters,
-            this.state,
-            (chapterId) => this.selectChapter(chapterId)
-        );
-    }
-
-    /**
-     * 渲染主内容
-     */
-    renderContent() {
-        const chapter = this.getCurrentChapter();
-        const topic = this.getCurrentTopic();
-
-        UIRenderer.renderContent(chapter, topic, this.state, {
-            onPrev: () => this.prevTopic(),
-            onNext: () => this.nextTopic()
-        });
-    }
-
-    /**
-     * 更新进度显示
-     */
-    updateProgress() {
-        const totalTopics = this.knowledgeBase.chapters.reduce(
-            (sum, c) => sum + c.topics.length, 0
-        );
-        const completedCount = this.state.completedTopics.length;
-
-        UIRenderer.updateProgress(completedCount, totalTopics);
-    }
-
-    /**
-     * 获取当前章节
-     */
-    getCurrentChapter() {
-        return this.knowledgeBase.chapters.find(c => c.id === this.state.currentChapter);
-    }
-
-    /**
-     * 获取当前知识点
-     */
-    getCurrentTopic() {
-        const chapter = this.getCurrentChapter();
-        return chapter.topics[this.state.currentTopicIndex];
-    }
-
-    /**
-     * 选择章节
-     */
-    selectChapter(chapterId) {
-        if (!this.state.unlockedChapters.includes(chapterId)) {
-            return;
-        }
-
-        this.state.currentChapter = chapterId;
-        this.state.currentTopicIndex = 0;
-
-        // 找到第一个未完成的知识点
-        const chapter = this.getCurrentChapter();
-        for (let i = 0; i < chapter.topics.length; i++) {
-            const topicId = `${chapterId}-${chapter.topics[i].term}`;
-            if (!this.state.completedTopics.includes(topicId)) {
-                this.state.currentTopicIndex = i;
-                break;
-            }
-        }
-
-        this.saveState();
-        this.render();
-    }
-
-    /**
-     * 上一个知识点
-     */
-    prevTopic() {
-        if (this.state.currentTopicIndex > 0) {
-            this.state.currentTopicIndex--;
-            this.saveState();
-            this.renderContent();
-        }
-    }
-
-    /**
-     * 下一个知识点
-     */
-    nextTopic() {
-        const chapter = this.getCurrentChapter();
-        const topic = this.getCurrentTopic();
-        const topicId = `${chapter.id}-${topic.term}`;
-        const quizState = window._quizState;
-
-        // 如果还没完成，需要先答题
-        if (!this.state.completedTopics.includes(topicId)) {
-            const selectedAnswer = quizState?.getSelected();
-
-            if (selectedAnswer === null) {
-                alert('请先回答测验问题！');
-                return;
-            }
-
-            if (!quizState.isChecked()) {
-                const correct = selectedAnswer === topic.quiz.answer;
-
-                // 显示答案反馈
-                UIRenderer.showQuizFeedback(correct, topic.quiz.answer, selectedAnswer);
-                quizState.setChecked(true);
-
-                if (correct) {
-                    // 标记完成
-                    this.state.completedTopics.push(topicId);
-
-                    // 计算得分
-                    const score = UIRenderer.difficultyScores[topic.difficulty];
-                    this.state.totalScore += score;
-
-                    // 更新统计
-                    this.state.statistics.correctAnswers++;
-
-                    // 检查是否完成章节
-                    if (UIRenderer.isChapterCompleted(chapter, this.state)) {
-                        this.unlockNextChapter(chapter.id);
-                    }
-
-                    this.saveState();
-                    this.updateProgress();
-                    this.renderChapterNav();
-                } else {
-                    this.state.statistics.wrongAnswers++;
-                    this.saveState();
-                }
-
-                return;
-            }
-        }
-
-        // 移动到下一个知识点
-        if (this.state.currentTopicIndex < chapter.topics.length - 1) {
-            this.state.currentTopicIndex++;
-        } else if (this.state.currentChapter < this.knowledgeBase.chapters.length) {
-            // 进入下一章
-            const nextChapterId = this.state.currentChapter + 1;
-            if (this.state.unlockedChapters.includes(nextChapterId)) {
-                this.state.currentChapter = nextChapterId;
-                this.state.currentTopicIndex = 0;
-                this.renderChapterNav();
-            }
-        }
-
-        this.saveState();
-        this.renderContent();
-    }
-
-    /**
-     * 解锁下一章
-     */
-    unlockNextChapter(currentChapterId) {
-        const nextChapterId = currentChapterId + 1;
-
-        if (nextChapterId <= this.knowledgeBase.chapters.length &&
-            !this.state.unlockedChapters.includes(nextChapterId)) {
-
-            this.state.unlockedChapters.push(nextChapterId);
-
-            const currentChapter = this.knowledgeBase.chapters.find(c => c.id === currentChapterId);
-            UIRenderer.showAchievement(
-                '🎉 章节完成！',
-                `恭喜完成${currentChapter.title}，下一章已解锁！`
-            );
-        }
-    }
-
-    /**
-     * 保存状态
-     */
-    saveState() {
-        StorageManager.save(this.state);
-    }
-
-    /**
-     * 重置进度
-     */
-    resetProgress() {
-        if (confirm('确定要重置所有学习进度吗？此操作不可撤销。')) {
-            this.state = StorageManager.reset();
-            this.render();
-        }
-    }
-
-    /**
-     * 导出数据
-     */
-    exportData() {
-        const data = StorageManager.export();
-        const blob = new Blob([data], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `ai-learning-progress-${new Date().toISOString().slice(0, 10)}.json`;
-        a.click();
-
-        URL.revokeObjectURL(url);
-    }
-
-    /**
-     * 显示错误信息
-     */
-    showError(message) {
-        const content = document.getElementById('main-content');
-        if (content) {
-            content.innerHTML = `
-                <div style="text-align: center; padding: 40px; color: #f44336;">
-                    <h3>⚠️ ${message}</h3>
-                    <button class="btn btn--primary" onclick="location.reload()">
-                        刷新页面
+            console.error('初始化失败:', error);
+            document.getElementById('content-body').innerHTML = `
+                <div style="text-align:center;padding:50px;color:#e53e3e;">
+                    <h3>加载失败</h3>
+                    <p>${error.message}</p>
+                    <button onclick="location.reload()" style="margin-top:20px;padding:10px 20px;cursor:pointer;">
+                        刷新重试
                     </button>
                 </div>
             `;
         }
     }
+
+    async loadData() {
+        const response = await fetch('./src/data/knowledge-base.json');
+        if (!response.ok) throw new Error('无法加载知识库');
+        this.data = await response.json();
+
+        // 设置默认选中
+        if (this.data.categories.length > 0) {
+            this.currentCategory = this.data.categories[0];
+            if (this.currentCategory.chapters.length > 0) {
+                this.currentChapter = this.currentCategory.chapters[0];
+            }
+        }
+    }
+
+    render() {
+        this.renderSidebar();
+        this.renderContent();
+    }
+
+    renderSidebar() {
+        const sidebar = document.getElementById('sidebar-nav');
+        if (!sidebar) return;
+
+        let html = '';
+
+        this.data.categories.forEach(category => {
+            html += `
+                <div class="nav-category">
+                    <div class="category-title">
+                        <span class="icon">${category.icon}</span>
+                        <span>${category.name}</span>
+                    </div>
+                    <ul class="chapter-list">
+            `;
+
+            category.chapters.forEach(chapter => {
+                const isActive = this.currentChapter && this.currentChapter.id === chapter.id;
+                html += `
+                    <li class="chapter-item">
+                        <div class="chapter-link ${isActive ? 'active' : ''}"
+                             data-category="${category.id}"
+                             data-chapter="${chapter.id}">
+                            <span class="icon">${chapter.icon}</span>
+                            <span class="title">${chapter.title}</span>
+                        </div>
+                    </li>
+                `;
+            });
+
+            html += `</ul></div>`;
+        });
+
+        sidebar.innerHTML = html;
+    }
+
+    renderContent() {
+        if (!this.currentChapter) return;
+
+        // 更新面包屑
+        const breadcrumb = document.getElementById('breadcrumb');
+        if (breadcrumb) {
+            breadcrumb.innerHTML = `
+                <span>${this.currentCategory.name}</span>
+                <span class="separator">/</span>
+                <span class="current">${this.currentChapter.title}</span>
+            `;
+        }
+
+        // 更新标题
+        const titleEl = document.getElementById('chapter-title');
+        if (titleEl) {
+            titleEl.innerHTML = `
+                <span class="icon">${this.currentChapter.icon}</span>
+                <h2>${this.currentChapter.title}</h2>
+            `;
+        }
+
+        // 更新Section标签
+        this.renderSectionTabs();
+
+        // 更新内容
+        this.renderSectionContent();
+    }
+
+    renderSectionTabs() {
+        const tabs = document.getElementById('section-tabs');
+        if (!tabs || !this.currentChapter) return;
+
+        const sections = this.currentChapter.sections;
+        const sectionOrder = ['terminology', 'basic', 'advanced', 'practice'];
+
+        let html = '';
+        sectionOrder.forEach(key => {
+            if (sections[key]) {
+                const isActive = this.currentSection === key;
+                html += `
+                    <button class="section-tab ${isActive ? 'active' : ''}" data-section="${key}">
+                        ${sections[key].title}
+                    </button>
+                `;
+            }
+        });
+
+        tabs.innerHTML = html;
+    }
+
+    renderSectionContent() {
+        const contentBody = document.getElementById('content-body');
+        if (!contentBody || !this.currentChapter) return;
+
+        const section = this.currentChapter.sections[this.currentSection];
+        if (!section) return;
+
+        let html = '';
+
+        if (this.currentSection === 'terminology') {
+            // 术语表格
+            html = `
+                <div class="terminology-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>术语</th>
+                                <th>英文</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${section.items.map(item => `
+                                <tr>
+                                    <td class="term-name">${item.term}</td>
+                                    <td class="term-english">${item.english}</td>
+                                    <td class="term-desc">${item.desc}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        } else {
+            // Markdown内容
+            html = `
+                <div class="markdown-content">
+                    ${this.renderMarkdown(section.content)}
+                </div>
+            `;
+        }
+
+        contentBody.innerHTML = html;
+    }
+
+    renderMarkdown(content) {
+        // 简单的Markdown渲染
+        let html = content;
+
+        // 代码块
+        html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (match, lang, code) => {
+            return `<pre><code class="language-${lang}">${this.escapeHtml(code.trim())}</code></pre>`;
+        });
+
+        // 表格
+        html = html.replace(/\|(.+)\|\n\|[-| ]+\|\n((?:\|.+\|\n?)+)/g, (match, header, body) => {
+            const headers = header.split('|').filter(h => h.trim());
+            const rows = body.trim().split('\n').map(row =>
+                row.split('|').filter(c => c.trim())
+            );
+
+            return `
+                <table>
+                    <thead>
+                        <tr>${headers.map(h => `<th>${h.trim()}</th>`).join('')}</tr>
+                    </thead>
+                    <tbody>
+                        ${rows.map(row => `<tr>${row.map(c => `<td>${c.trim()}</td>`).join('')}</tr>`).join('')}
+                    </tbody>
+                </table>
+            `;
+        });
+
+        // 标题
+        html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+        html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+
+        // 粗体
+        html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+        // 行内代码
+        html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+        // 列表
+        html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+        html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+
+        // 数字列表
+        html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+
+        // 段落
+        html = html.replace(/\n\n/g, '</p><p>');
+        html = '<p>' + html + '</p>';
+        html = html.replace(/<p><(h[23]|ul|ol|table|pre)/g, '<$1');
+        html = html.replace(/<\/(h[23]|ul|ol|table|pre)><\/p>/g, '</$1>');
+        html = html.replace(/<p><\/p>/g, '');
+
+        return html;
+    }
+
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    bindEvents() {
+        // 章节点击
+        document.getElementById('sidebar-nav')?.addEventListener('click', (e) => {
+            const link = e.target.closest('.chapter-link');
+            if (!link) return;
+
+            const categoryId = link.dataset.category;
+            const chapterId = link.dataset.chapter;
+
+            this.currentCategory = this.data.categories.find(c => c.id === categoryId);
+            this.currentChapter = this.currentCategory?.chapters.find(ch => ch.id === chapterId);
+            this.currentSection = 'terminology';
+
+            this.render();
+
+            // 移动端关闭侧边栏
+            document.getElementById('sidebar')?.classList.remove('open');
+        });
+
+        // Section Tab点击
+        document.getElementById('section-tabs')?.addEventListener('click', (e) => {
+            const tab = e.target.closest('.section-tab');
+            if (!tab) return;
+
+            this.currentSection = tab.dataset.section;
+            this.renderSectionTabs();
+            this.renderSectionContent();
+        });
+
+        // 移动端侧边栏切换
+        document.getElementById('sidebar-toggle')?.addEventListener('click', () => {
+            document.getElementById('sidebar')?.classList.toggle('open');
+        });
+
+        // 点击内容区关闭侧边栏
+        document.getElementById('main-content')?.addEventListener('click', () => {
+            document.getElementById('sidebar')?.classList.remove('open');
+        });
+    }
 }
 
-// 创建全局实例
-const app = new AILearningApp();
-
-// DOM 加载完成后初始化
+// 启动应用
 document.addEventListener('DOMContentLoaded', () => {
+    const app = new AILearningApp();
     app.init();
 });
-
-// 导出供外部使用
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = AILearningApp;
-}

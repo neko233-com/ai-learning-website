@@ -3,80 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="多模态AI系统学习平台 - 从基础到前沿，循序渐进掌握多模态AI知识">
-    <meta name="keywords" content="AI, 人工智能, 多模态, 深度学习, Transformer, BERT, GPT, 机器学习">
-    <meta name="author" content="AI Learning Platform">
-
-    <!-- Open Graph / Social Media -->
-    <meta property="og:title" content="多模态AI系统学习平台">
-    <meta property="og:description" content="从基础到前沿，循序渐进掌握多模态AI知识">
-    <meta property="og:type" content="website">
-
-    <title>多模态AI系统学习平台</title>
-
-    <!-- Favicon -->
+    <meta name="description" content="AI学习平台 - 系统学习多模态AI、深度学习、大模型部署知识">
+    <meta name="keywords" content="AI, 深度学习, Transformer, LLM, 多模态, Stable Diffusion, 模型部署">
+    <title>AI Learning Hub - AI学习平台</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
-
-    <!-- Styles -->
     <link rel="stylesheet" href="./src/css/main.css">
 </head>
 <body>
-    <div class="container">
-        <!-- 头部 -->
-        <header class="header">
-            <h1 class="header__title">🧠 多模态AI系统学习平台</h1>
-            <p class="header__subtitle">从基础到前沿，循序渐进掌握多模态AI知识</p>
-        </header>
-
-        <!-- 学习进度面板 -->
-        <section class="progress-panel">
-            <div class="progress-panel__header">
-                <h2 class="progress-panel__title">📊 学习进度</h2>
-                <div class="progress-panel__stats">
-                    <span>已完成: <strong id="completed-count">0</strong> / <strong id="total-count">0</strong></span>
-                    <span>当前章节: <strong id="current-chapter-name">加载中...</strong></span>
-                </div>
+    <div class="app-container">
+        <!-- 左侧边栏 -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>🧠 AI Learning Hub</h1>
+                <p>系统学习AI知识</p>
             </div>
-            <div class="progress-bar">
-                <div class="progress-bar__fill" id="progress-fill" style="width: 0%"></div>
-            </div>
-        </section>
-
-        <!-- 章节导航 -->
-        <nav class="chapter-nav" id="chapter-nav" aria-label="章节导航">
-            <!-- 动态生成 -->
-        </nav>
+            <nav id="sidebar-nav">
+                <!-- 动态生成 -->
+            </nav>
+        </aside>
 
         <!-- 主内容区 -->
         <main class="main-content" id="main-content">
-            <div class="loading">
-                <div class="loading__spinner"></div>
-                <span>加载中...</span>
+            <!-- 顶部导航 -->
+            <header class="content-header">
+                <div class="breadcrumb" id="breadcrumb">
+                    <span>加载中...</span>
+                </div>
+                <div class="section-tabs" id="section-tabs">
+                    <!-- 动态生成 -->
+                </div>
+            </header>
+
+            <!-- 章节标题 -->
+            <div class="content-body">
+                <div class="chapter-title" id="chapter-title">
+                    <!-- 动态生成 -->
+                </div>
+                <div id="content-body">
+                    <!-- 动态生成 -->
+                </div>
             </div>
+
+            <!-- 页脚 -->
+            <footer class="content-footer">
+                <p>
+                    Made with ❤️ for AI Learners |
+                    <a href="./docs/LOCAL_MODEL_GUIDE.md" target="_blank">本地模型搭建指南</a> |
+                    <a href="https://github.com/neko233-com/ai-learning-website" target="_blank">GitHub</a>
+                </p>
+            </footer>
         </main>
 
-        <!-- 成就弹窗 -->
-        <aside class="achievement-popup" id="achievement-popup" role="alert">
-            <span class="achievement-popup__icon">🏆</span>
-            <div>
-                <strong id="achievement-title" class="achievement-popup__title">成就达成!</strong>
-                <p id="achievement-desc" class="achievement-popup__desc"></p>
-            </div>
-        </aside>
+        <!-- 移动端菜单按钮 -->
+        <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
     </div>
 
-    <!-- 页脚 -->
-    <footer style="text-align: center; padding: 20px; color: rgba(255,255,255,0.7); font-size: 0.9em;">
-        <p>
-            Made with ❤️ for AI Learners |
-            <a href="./docs/LOCAL_MODEL_GUIDE.md" style="color: rgba(255,255,255,0.9);">本地模型搭建指南</a> |
-            <a href="https://github.com/neko233-com/ai-learning-website" style="color: rgba(255,255,255,0.9);">GitHub</a>
-        </p>
-    </footer>
-
-    <!-- JavaScript 模块 -->
-    <script src="./src/js/storage.js"></script>
-    <script src="./src/js/ui.js"></script>
     <script src="./src/js/app.js"></script>
 </body>
 </html>

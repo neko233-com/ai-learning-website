@@ -1,783 +1,295 @@
 {
-  "version": "1.0.0",
-  "lastUpdated": "2025-01-29",
-  "chapters": [
+  "version": "2.0.0",
+  "lastUpdated": "2025-01-30",
+  "categories": [
     {
-      "id": 1,
-      "title": "第一章：深度学习基础",
+      "id": "basics",
+      "name": "基础知识",
       "icon": "📚",
-      "description": "从神经网络基础开始，理解现代AI的核心机制",
-      "topics": [
+      "chapters": [
         {
-          "id": "nn-basics",
-          "term": "神经网络",
-          "english": "Neural Network",
-          "definition": "由多层人工神经元组成的计算模型，通过模拟生物神经系统的信息处理方式来学习数据中的模式。每层接收输入，进行加权求和并通过激活函数输出。",
-          "tips": "想象大脑神经元的连接方式，信息从输入层流向输出层，中间的隐藏层进行特征提取。",
-          "difficulty": "beginner",
-          "relatedTopics": ["backprop", "activation"],
-          "quiz": {
-            "question": "神经网络的基本组成单元是什么？",
-            "options": ["神经元", "像素", "字节", "向量"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "backprop",
-          "term": "反向传播",
-          "english": "Backpropagation",
-          "definition": "一种用于训练神经网络的算法，通过计算损失函数相对于每个权重的梯度，从输出层反向传播误差到输入层，以更新网络参数。",
-          "tips": "Back(向后) + Propagation(传播) = 误差从输出向输入方向传播，逐层调整权重。",
-          "difficulty": "beginner",
-          "relatedTopics": ["gradient-descent", "loss-function"],
-          "quiz": {
-            "question": "反向传播算法的主要作用是什么？",
-            "options": ["计算梯度并更新权重", "生成图像", "压缩数据", "加速推理"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "activation",
-          "term": "激活函数",
-          "english": "Activation Function",
-          "definition": "引入非线性的数学函数，常见的有ReLU、Sigmoid、Tanh等。没有激活函数，无论多少层神经网络都只能表示线性变换。",
-          "tips": "激活函数就像神经元的'开关'，决定信号是否以及如何传递到下一层。ReLU(x)=max(0,x)是最常用的。",
-          "difficulty": "beginner",
-          "relatedTopics": ["nn-basics"],
-          "quiz": {
-            "question": "以下哪个是常用的激活函数？",
-            "options": ["ReLU", "SQL", "HTTP", "JSON"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "loss-function",
-          "term": "损失函数",
-          "english": "Loss Function",
-          "definition": "衡量模型预测值与真实值之间差异的函数。训练目标就是最小化损失函数。常见的有交叉熵损失（分类）和均方误差（回归）。",
-          "tips": "Loss = 损失/亏损，数值越小说明模型预测越准确。训练就是不断减少'损失'的过程。",
-          "difficulty": "beginner",
-          "relatedTopics": ["gradient-descent", "backprop"],
-          "quiz": {
-            "question": "训练神经网络时，我们希望损失函数的值如何变化？",
-            "options": ["越来越小", "越来越大", "保持不变", "随机波动"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "gradient-descent",
-          "term": "梯度下降",
-          "english": "Gradient Descent",
-          "definition": "一种优化算法，通过沿着损失函数梯度的反方向更新参数，逐步找到损失函数的最小值点。学习率控制每次更新的步长。",
-          "tips": "想象在山上找最低点，每次沿最陡的下坡方向走一步。梯度指向上坡方向，所以我们要'负'梯度方向走。",
-          "difficulty": "beginner",
-          "relatedTopics": ["loss-function", "backprop"],
-          "quiz": {
-            "question": "梯度下降中，参数更新的方向是？",
-            "options": ["梯度的反方向", "梯度的正方向", "随机方向", "不移动"],
-            "answer": 0
-          }
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "title": "第二章：注意力机制与Transformer",
-      "icon": "🔍",
-      "description": "理解革命性的注意力机制，这是现代大模型的核心",
-      "topics": [
-        {
-          "id": "attention",
-          "term": "注意力机制",
-          "english": "Attention Mechanism",
-          "definition": "允许模型动态地关注输入序列的不同部分。通过计算Query与Key的相似度得到注意力权重，然后对Value加权求和，实现信息的选择性聚焦。",
-          "tips": "就像人类阅读时会重点关注某些词，注意力机制让模型学会'看哪里更重要'。Q(查询)K(键)V(值)三元组是关键。",
-          "difficulty": "beginner",
-          "relatedTopics": ["self-attention", "multi-head-attention"],
-          "quiz": {
-            "question": "注意力机制的三个核心组件是什么？",
-            "options": ["Query, Key, Value", "Input, Output, Hidden", "Encoder, Decoder, Attention", "Weight, Bias, Activation"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "self-attention",
-          "term": "自注意力",
-          "english": "Self-Attention",
-          "definition": "一种特殊的注意力机制，其中Query、Key、Value都来自同一个输入序列。允许序列中的每个位置关注其他所有位置，捕获长距离依赖关系。",
-          "tips": "'Self'表示自己关注自己。输入序列中的每个token都会与其他所有token计算相关性。",
-          "difficulty": "beginner",
-          "relatedTopics": ["attention", "transformer"],
-          "quiz": {
-            "question": "自注意力中的Q、K、V来自哪里？",
-            "options": ["同一个输入序列", "不同的输入序列", "外部数据库", "随机生成"],
-            "answer": 0
+          "id": "dl-fundamentals",
+          "title": "深度学习基础",
+          "icon": "🧠",
+          "sections": {
+            "terminology": {
+              "title": "专业术语",
+              "items": [
+                {"term": "神经网络", "english": "Neural Network", "desc": "由多层人工神经元组成的计算模型，模拟生物神经系统"},
+                {"term": "反向传播", "english": "Backpropagation", "desc": "计算梯度并从输出层向输入层传播误差的训练算法"},
+                {"term": "激活函数", "english": "Activation Function", "desc": "引入非线性的函数，如ReLU、Sigmoid、Tanh"},
+                {"term": "损失函数", "english": "Loss Function", "desc": "衡量预测值与真实值差异的函数"},
+                {"term": "梯度下降", "english": "Gradient Descent", "desc": "沿梯度反方向更新参数的优化算法"},
+                {"term": "学习率", "english": "Learning Rate", "desc": "控制每次参数更新步长的超参数"},
+                {"term": "过拟合", "english": "Overfitting", "desc": "模型在训练集上表现好但泛化能力差"},
+                {"term": "正则化", "english": "Regularization", "desc": "防止过拟合的技术，如L1/L2正则化、Dropout"}
+              ]
+            },
+            "basic": {
+              "title": "基础概念",
+              "content": "### 什么是深度学习？\n\n深度学习是机器学习的一个分支，使用多层神经网络自动学习数据的层次化表示。\n\n### 核心组件\n\n1. **神经元（Neuron）**\n   - 接收输入，加权求和，通过激活函数输出\n   - 公式：`y = f(Σ(wi * xi) + b)`\n\n2. **层（Layer）**\n   - 输入层：接收原始数据\n   - 隐藏层：特征提取和转换\n   - 输出层：产生最终结果\n\n3. **前向传播**\n   - 数据从输入层流向输出层\n   - 每层进行线性变换+非线性激活\n\n4. **反向传播**\n   - 计算损失函数对参数的梯度\n   - 使用链式法则逐层计算"
+            },
+            "advanced": {
+              "title": "进阶知识",
+              "content": "### 优化器详解\n\n| 优化器 | 特点 | 适用场景 |\n|--------|------|----------|\n| SGD | 基础，可能震荡 | 简单任务 |\n| Momentum | 加速收敛 | 通用 |\n| Adam | 自适应学习率 | 大多数场景 |\n| AdamW | Adam+权重衰减 | Transformer训练 |\n\n### 正则化技术\n\n1. **L1正则化**：产生稀疏权重\n2. **L2正则化**：防止权重过大\n3. **Dropout**：随机丢弃神经元\n4. **Batch Normalization**：标准化层输入\n5. **Layer Normalization**：Transformer常用\n\n### 学习率调度\n\n```python\n# 余弦退火\nscheduler = CosineAnnealingLR(optimizer, T_max=100)\n\n# 带热重启\nscheduler = CosineAnnealingWarmRestarts(optimizer, T_0=10)\n```"
+            },
+            "practice": {
+              "title": "实战代码",
+              "content": "### PyTorch 实现简单神经网络\n\n```python\nimport torch\nimport torch.nn as nn\nimport torch.optim as optim\n\n# 定义网络\nclass SimpleNN(nn.Module):\n    def __init__(self, input_size, hidden_size, output_size):\n        super().__init__()\n        self.layers = nn.Sequential(\n            nn.Linear(input_size, hidden_size),\n            nn.ReLU(),\n            nn.Dropout(0.2),\n            nn.Linear(hidden_size, hidden_size),\n            nn.ReLU(),\n            nn.Linear(hidden_size, output_size)\n        )\n    \n    def forward(self, x):\n        return self.layers(x)\n\n# 初始化\nmodel = SimpleNN(784, 256, 10)\ncriterion = nn.CrossEntropyLoss()\noptimizer = optim.Adam(model.parameters(), lr=1e-3)\n\n# 训练循环\nfor epoch in range(num_epochs):\n    for batch_x, batch_y in dataloader:\n        optimizer.zero_grad()\n        outputs = model(batch_x)\n        loss = criterion(outputs, batch_y)\n        loss.backward()\n        optimizer.step()\n```\n\n### TensorFlow/Keras 实现\n\n```python\nimport tensorflow as tf\nfrom tensorflow.keras import layers, models\n\nmodel = models.Sequential([\n    layers.Dense(256, activation='relu', input_shape=(784,)),\n    layers.Dropout(0.2),\n    layers.Dense(256, activation='relu'),\n    layers.Dense(10, activation='softmax')\n])\n\nmodel.compile(\n    optimizer='adam',\n    loss='sparse_categorical_crossentropy',\n    metrics=['accuracy']\n)\n\nmodel.fit(x_train, y_train, epochs=10, batch_size=32)\n```"
+            }
           }
         },
         {
           "id": "transformer",
-          "term": "Transformer",
-          "english": "Transformer",
-          "definition": "2017年提出的划时代架构，完全基于自注意力机制，抛弃了传统的RNN/CNN结构。包含编码器和解码器，支持并行计算，是GPT、BERT等模型的基础。",
-          "tips": "'Attention is All You Need'论文提出。Trans(转换)+former(形成者)，通过注意力'转换'输入表示。",
-          "difficulty": "beginner",
-          "relatedTopics": ["self-attention", "multi-head-attention", "positional-encoding"],
-          "quiz": {
-            "question": "Transformer架构的核心创新是什么？",
-            "options": ["完全基于自注意力机制", "使用更深的CNN", "引入循环结构", "减少参数量"],
-            "answer": 0
+          "title": "Transformer架构",
+          "icon": "🔍",
+          "sections": {
+            "terminology": {
+              "title": "专业术语",
+              "items": [
+                {"term": "注意力机制", "english": "Attention Mechanism", "desc": "动态关注输入序列不同部分的机制"},
+                {"term": "自注意力", "english": "Self-Attention", "desc": "Q、K、V来自同一输入的注意力"},
+                {"term": "多头注意力", "english": "Multi-Head Attention", "desc": "并行多个注意力头捕获不同信息"},
+                {"term": "位置编码", "english": "Positional Encoding", "desc": "为序列添加位置信息"},
+                {"term": "前馈网络", "english": "Feed-Forward Network", "desc": "Transformer中的MLP层"},
+                {"term": "残差连接", "english": "Residual Connection", "desc": "跳跃连接，缓解梯度消失"},
+                {"term": "层归一化", "english": "Layer Normalization", "desc": "对每个样本的特征归一化"}
+              ]
+            },
+            "basic": {
+              "title": "基础概念",
+              "content": "### Transformer 核心思想\n\n2017年 \"Attention is All You Need\" 论文提出，完全基于注意力机制，抛弃RNN/CNN。\n\n### 自注意力计算\n\n```\nAttention(Q, K, V) = softmax(QK^T / √d_k) V\n```\n\n- **Q (Query)**：查询向量\n- **K (Key)**：键向量\n- **V (Value)**：值向量\n- **√d_k**：缩放因子，防止点积过大\n\n### 架构组成\n\n```\n输入 → 嵌入 + 位置编码\n     ↓\n┌─────────────────┐\n│  多头自注意力   │ ←─┐\n│  Add & Norm     │   │ 残差\n└─────────────────┘ ──┘\n     ↓\n┌─────────────────┐\n│  前馈网络       │ ←─┐\n│  Add & Norm     │   │ 残差\n└─────────────────┘ ──┘\n     ↓\n   输出\n```"
+            },
+            "advanced": {
+              "title": "进阶知识",
+              "content": "### 多头注意力详解\n\n```python\n# 将 d_model 分成 h 个头\nhead_dim = d_model // num_heads\n\n# 每个头独立计算注意力\nfor i in range(num_heads):\n    Q_i = Q @ W_Q[i]  # (seq_len, head_dim)\n    K_i = K @ W_K[i]\n    V_i = V @ W_V[i]\n    head_i = Attention(Q_i, K_i, V_i)\n\n# 拼接所有头\noutput = Concat(head_1, ..., head_h) @ W_O\n```\n\n### 位置编码\n\n**正弦位置编码：**\n```\nPE(pos, 2i) = sin(pos / 10000^(2i/d))\nPE(pos, 2i+1) = cos(pos / 10000^(2i/d))\n```\n\n**可学习位置编码：**\n- 直接学习位置嵌入\n- RoPE（旋转位置编码）\n- ALiBi（线性偏置）\n\n### KV Cache 优化\n\n推理时缓存历史 K、V，避免重复计算：\n```python\n# 第一次：计算完整序列\nK_cache = K[:seq_len]\nV_cache = V[:seq_len]\n\n# 后续：只计算新token\nK_new = new_token @ W_K\nK_cache = concat(K_cache, K_new)\n```"
+            },
+            "practice": {
+              "title": "实战代码",
+              "content": "### PyTorch 实现 Transformer\n\n```python\nimport torch\nimport torch.nn as nn\nimport math\n\nclass MultiHeadAttention(nn.Module):\n    def __init__(self, d_model, num_heads):\n        super().__init__()\n        self.d_model = d_model\n        self.num_heads = num_heads\n        self.head_dim = d_model // num_heads\n        \n        self.W_q = nn.Linear(d_model, d_model)\n        self.W_k = nn.Linear(d_model, d_model)\n        self.W_v = nn.Linear(d_model, d_model)\n        self.W_o = nn.Linear(d_model, d_model)\n    \n    def forward(self, q, k, v, mask=None):\n        batch_size = q.size(0)\n        \n        # 线性变换并分头\n        Q = self.W_q(q).view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)\n        K = self.W_k(k).view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)\n        V = self.W_v(v).view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)\n        \n        # 注意力计算\n        scores = torch.matmul(Q, K.transpose(-2, -1)) / math.sqrt(self.head_dim)\n        if mask is not None:\n            scores = scores.masked_fill(mask == 0, -1e9)\n        attn = torch.softmax(scores, dim=-1)\n        \n        # 输出\n        out = torch.matmul(attn, V)\n        out = out.transpose(1, 2).contiguous().view(batch_size, -1, self.d_model)\n        return self.W_o(out)\n\nclass TransformerBlock(nn.Module):\n    def __init__(self, d_model, num_heads, d_ff, dropout=0.1):\n        super().__init__()\n        self.attention = MultiHeadAttention(d_model, num_heads)\n        self.norm1 = nn.LayerNorm(d_model)\n        self.norm2 = nn.LayerNorm(d_model)\n        self.ffn = nn.Sequential(\n            nn.Linear(d_model, d_ff),\n            nn.GELU(),\n            nn.Linear(d_ff, d_model)\n        )\n        self.dropout = nn.Dropout(dropout)\n    \n    def forward(self, x, mask=None):\n        # 自注意力 + 残差\n        attn_out = self.attention(x, x, x, mask)\n        x = self.norm1(x + self.dropout(attn_out))\n        \n        # FFN + 残差\n        ffn_out = self.ffn(x)\n        x = self.norm2(x + self.dropout(ffn_out))\n        return x\n```\n\n### 使用 Hugging Face Transformers\n\n```python\nfrom transformers import AutoModel, AutoTokenizer\n\n# 加载预训练模型\nmodel = AutoModel.from_pretrained('bert-base-chinese')\ntokenizer = AutoTokenizer.from_pretrained('bert-base-chinese')\n\n# 编码文本\ninputs = tokenizer('你好世界', return_tensors='pt')\noutputs = model(**inputs)\n\n# 获取表示\nlast_hidden = outputs.last_hidden_state  # (1, seq_len, 768)\npooled = outputs.pooler_output  # (1, 768)\n```"
+            }
           }
         },
         {
-          "id": "multi-head-attention",
-          "term": "多头注意力",
-          "english": "Multi-Head Attention",
-          "definition": "将注意力机制并行运行多次（多个'头'），每个头学习不同的注意力模式，然后将结果拼接。这样模型可以同时关注不同类型的信息。",
-          "tips": "多头就像多个专家从不同角度分析问题，然后综合意见。8头或16头是常见配置。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["attention", "transformer"],
-          "quiz": {
-            "question": "多头注意力的优势是什么？",
-            "options": ["可以同时关注不同类型的信息", "减少计算量", "简化模型结构", "加速训练"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "positional-encoding",
-          "term": "位置编码",
-          "english": "Positional Encoding",
-          "definition": "由于自注意力机制没有位置信息，需要额外添加位置编码让模型知道token在序列中的位置。常用正弦余弦函数或可学习的嵌入。",
-          "tips": "注意力是'顺序无关'的，位置编码告诉模型'谁在前谁在后'。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["transformer", "self-attention"],
-          "quiz": {
-            "question": "为什么Transformer需要位置编码？",
-            "options": ["自注意力没有位置信息", "加速计算", "减少内存", "提高精度"],
-            "answer": 0
+          "id": "llm",
+          "title": "大语言模型",
+          "icon": "💬",
+          "sections": {
+            "terminology": {
+              "title": "专业术语",
+              "items": [
+                {"term": "预训练", "english": "Pre-training", "desc": "在大规模数据上学习通用表示"},
+                {"term": "微调", "english": "Fine-tuning", "desc": "在特定任务数据上继续训练"},
+                {"term": "指令微调", "english": "Instruction Tuning", "desc": "用指令-回复对训练模型遵循指令"},
+                {"term": "上下文学习", "english": "In-Context Learning", "desc": "通过示例在推理时学习"},
+                {"term": "思维链", "english": "Chain-of-Thought", "desc": "让模型展示推理过程"},
+                {"term": "涌现能力", "english": "Emergent Abilities", "desc": "规模达到阈值后出现的能力"},
+                {"term": "幻觉", "english": "Hallucination", "desc": "模型生成虚假或错误信息"},
+                {"term": "对齐", "english": "Alignment", "desc": "使模型行为符合人类意图"}
+              ]
+            },
+            "basic": {
+              "title": "基础概念",
+              "content": "### 主流大模型\n\n| 模型 | 公司 | 参数量 | 特点 |\n|------|------|--------|------|\n| GPT-4 | OpenAI | ~1.8T | 最强通用能力 |\n| Claude | Anthropic | - | 安全、长上下文 |\n| Llama 3 | Meta | 8B-405B | 开源最强 |\n| Qwen 2.5 | 阿里 | 0.5B-72B | 中文优秀 |\n| DeepSeek | 深度求索 | 7B-236B | 性价比高 |\n\n### 训练三阶段\n\n```\n1. 预训练 (Pre-training)\n   └─ 海量文本，自回归预测下一个token\n\n2. 监督微调 (SFT)\n   └─ 高质量指令数据，学习遵循指令\n\n3. 人类反馈强化学习 (RLHF/DPO)\n   └─ 对齐人类偏好，提升有用性和安全性\n```\n\n### Prompt 工程\n\n```\n# 基本结构\n系统提示 (System Prompt)\n   ↓\n用户输入 (User Message)\n   ↓\n模型回复 (Assistant Message)\n```"
+            },
+            "advanced": {
+              "title": "进阶知识",
+              "content": "### RLHF vs DPO\n\n**RLHF：**\n1. 收集人类偏好数据\n2. 训练奖励模型\n3. PPO强化学习优化\n\n**DPO（更简单）：**\n```python\n# 直接优化偏好，无需奖励模型\nloss = -log(sigmoid(β * (log_π(y_w) - log_π(y_l))))\n```\n\n### 长上下文技术\n\n| 技术 | 原理 | 代表模型 |\n|------|------|----------|\n| RoPE | 旋转位置编码 | Llama |\n| ALiBi | 线性注意力偏置 | Bloom |\n| YaRN | RoPE插值 | 长上下文Llama |\n| Ring Attention | 分布式长序列 | - |\n\n### 推理加速\n\n```python\n# vLLM - 高性能推理\nfrom vllm import LLM, SamplingParams\n\nllm = LLM(model='Qwen/Qwen2.5-7B-Instruct')\nparams = SamplingParams(temperature=0.7, max_tokens=512)\noutputs = llm.generate(['你好'], params)\n```\n\n### 量化部署\n\n```bash\n# GPTQ 4-bit 量化\nmodel = AutoModelForCausalLM.from_pretrained(\n    'model-gptq-4bit',\n    device_map='auto'\n)\n\n# AWQ 量化（更快）\n# bitsandbytes 8-bit/4-bit\nmodel = AutoModelForCausalLM.from_pretrained(\n    'model',\n    load_in_4bit=True,\n    bnb_4bit_compute_dtype=torch.float16\n)\n```"
+            },
+            "practice": {
+              "title": "实战代码",
+              "content": "### 本地运行 Ollama\n\n```bash\n# 安装\ncurl -fsSL https://ollama.ai/install.sh | sh\n\n# 运行模型\nollama run qwen2.5:7b\n\n# Python 调用\nimport requests\n\nresponse = requests.post(\n    'http://localhost:11434/api/generate',\n    json={\n        'model': 'qwen2.5:7b',\n        'prompt': '用Python写一个快速排序',\n        'stream': False\n    }\n)\nprint(response.json()['response'])\n```\n\n### OpenAI API 调用\n\n```python\nfrom openai import OpenAI\n\nclient = OpenAI(api_key='sk-xxx')\n\nresponse = client.chat.completions.create(\n    model='gpt-4',\n    messages=[\n        {'role': 'system', 'content': '你是一个helpful助手'},\n        {'role': 'user', 'content': '解释量子计算'}\n    ],\n    temperature=0.7\n)\n\nprint(response.choices[0].message.content)\n```\n\n### LoRA 微调\n\n```python\nfrom peft import LoraConfig, get_peft_model\n\n# LoRA 配置\nlora_config = LoraConfig(\n    r=64,\n    lora_alpha=128,\n    target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj'],\n    lora_dropout=0.05,\n    task_type='CAUSAL_LM'\n)\n\n# 应用 LoRA\nmodel = get_peft_model(base_model, lora_config)\nmodel.print_trainable_parameters()\n# 输出: trainable params: 6M || all params: 7B || 0.09%\n\n# 训练后合并\nmerged_model = model.merge_and_unload()\n```\n\n### LangChain RAG\n\n```python\nfrom langchain.embeddings import OpenAIEmbeddings\nfrom langchain.vectorstores import FAISS\nfrom langchain.chains import RetrievalQA\nfrom langchain.llms import OpenAI\n\n# 创建向量库\nembeddings = OpenAIEmbeddings()\nvectorstore = FAISS.from_documents(docs, embeddings)\n\n# 创建问答链\nqa = RetrievalQA.from_chain_type(\n    llm=OpenAI(),\n    chain_type='stuff',\n    retriever=vectorstore.as_retriever()\n)\n\nanswer = qa.run('什么是Transformer？')\n```"
+            }
           }
         }
       ]
     },
     {
-      "id": 3,
-      "title": "第三章：预训练语言模型",
-      "icon": "📝",
-      "description": "了解BERT、GPT等改变NLP格局的预训练范式",
-      "topics": [
-        {
-          "id": "pretraining",
-          "term": "预训练",
-          "english": "Pre-training",
-          "definition": "在大规模无标注数据上先训练模型学习通用表示，然后在特定任务上微调。这种'先通用后专用'的范式大幅提升了模型效果和数据效率。",
-          "tips": "Pre(预先) + training(训练)。就像先上通识课，再选专业课。",
-          "difficulty": "beginner",
-          "relatedTopics": ["fine-tuning", "bert", "gpt"],
-          "quiz": {
-            "question": "预训练的主要目的是什么？",
-            "options": ["学习通用表示", "减少参数量", "加速推理", "节省电力"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "bert",
-          "term": "BERT",
-          "english": "Bidirectional Encoder Representations from Transformers",
-          "definition": "Google在2018年提出的双向预训练模型。使用掩码语言模型(MLM)和下一句预测(NSP)任务进行预训练，在多项NLP任务上取得突破。",
-          "tips": "BERT是《芝麻街》角色名。Bidirectional(双向)是关键，能同时看到上下文。",
-          "difficulty": "beginner",
-          "relatedTopics": ["pretraining", "mlm", "fine-tuning"],
-          "quiz": {
-            "question": "BERT的'B'代表什么含义？",
-            "options": ["Bidirectional（双向）", "Big（大型）", "Best（最好）", "Binary（二元）"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "gpt",
-          "term": "GPT",
-          "english": "Generative Pre-trained Transformer",
-          "definition": "OpenAI推出的生成式预训练模型系列。采用自回归方式，从左到右逐token生成。GPT-3/4展现了强大的少样本学习和指令遵循能力。",
-          "tips": "Generative(生成式)是关键，GPT专注于生成文本而非理解文本。从GPT-1到GPT-4参数量指数增长。",
-          "difficulty": "beginner",
-          "relatedTopics": ["pretraining", "fine-tuning", "transformer"],
-          "quiz": {
-            "question": "GPT采用什么方式生成文本？",
-            "options": ["自回归（从左到右）", "双向生成", "随机采样", "模板填充"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "mlm",
-          "term": "掩码语言模型",
-          "english": "Masked Language Model (MLM)",
-          "definition": "BERT的预训练任务之一。随机遮盖输入中15%的token，让模型预测被遮盖的词。这迫使模型学习双向上下文表示。",
-          "tips": "像完形填空，遮住一些词让模型猜。[MASK]是BERT的标志性符号。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["bert", "pretraining"],
-          "quiz": {
-            "question": "掩码语言模型通常遮盖多少比例的token？",
-            "options": ["15%", "50%", "5%", "100%"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "fine-tuning",
-          "term": "微调",
-          "english": "Fine-tuning",
-          "definition": "在预训练模型基础上，使用特定任务的数据继续训练。通常只需要少量数据和训练轮次就能在下游任务上达到很好的效果。",
-          "tips": "Fine(精细) + tuning(调整)。预训练模型就像毛坯房，微调是精装修。",
-          "difficulty": "beginner",
-          "relatedTopics": ["pretraining", "lora"],
-          "quiz": {
-            "question": "微调时通常需要的数据量相比从头训练？",
-            "options": ["少很多", "多很多", "一样多", "不需要数据"],
-            "answer": 0
-          }
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "title": "第四章：视觉Transformer与图像理解",
-      "icon": "👁️",
-      "description": "探索Transformer如何革新计算机视觉领域",
-      "topics": [
-        {
-          "id": "vit",
-          "term": "ViT",
-          "english": "Vision Transformer",
-          "definition": "将Transformer应用于图像的开创性工作。将图像分割成16x16的小块(patch)，每个patch作为一个token输入Transformer。在大规模数据上超越了CNN。",
-          "tips": "Vi(sion) + T(ransformer)。把图像切成小方块，像处理文字token一样处理图像。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["transformer", "clip"],
-          "quiz": {
-            "question": "ViT如何处理输入图像？",
-            "options": ["分割成小块(patch)", "像素逐个处理", "整体输入", "随机采样"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "clip",
-          "term": "CLIP",
-          "english": "Contrastive Language-Image Pre-training",
-          "definition": "OpenAI提出的视觉-语言模型。使用对比学习在4亿图文对上训练，使图像和文本的表示在同一向量空间对齐。实现了强大的零样本图像分类能力。",
-          "tips": "Clip(剪辑)把图像和文字'剪'到一起。学会判断图像和文字是否匹配。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["contrastive-learning", "zero-shot"],
-          "quiz": {
-            "question": "CLIP的核心训练方法是什么？",
-            "options": ["对比学习", "强化学习", "监督学习", "自监督学习"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "contrastive-learning",
-          "term": "对比学习",
-          "english": "Contrastive Learning",
-          "definition": "一种自监督学习方法，通过拉近正样本对、推远负样本对来学习表示。不需要人工标注，从数据的结构中学习有意义的特征。",
-          "tips": "Contrastive(对比)是关键。正样本(同类)拉近，负样本(不同类)推远，形成良好的表示空间。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["clip", "image-embedding"],
-          "quiz": {
-            "question": "对比学习的目标是什么？",
-            "options": ["拉近正样本，推远负样本", "最大化所有样本距离", "最小化所有样本距离", "随机分布样本"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "image-embedding",
-          "term": "图像嵌入",
-          "english": "Image Embedding",
-          "definition": "将图像编码成固定维度的向量表示，使得语义相似的图像在向量空间中距离接近。是图像检索、分类等任务的基础。",
-          "tips": "Embedding(嵌入)就是把图像'压缩'成一个包含语义信息的向量。",
-          "difficulty": "beginner",
-          "relatedTopics": ["clip", "contrastive-learning"],
-          "quiz": {
-            "question": "图像嵌入的输出是什么？",
-            "options": ["固定维度的向量", "原始像素", "文字描述", "分类标签"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "zero-shot",
-          "term": "零样本学习",
-          "english": "Zero-shot Learning",
-          "definition": "模型在没有见过某类样本的情况下，仍能对其进行分类或识别。CLIP通过学习视觉-语言对齐，可以用自然语言描述新类别进行零样本分类。",
-          "tips": "Zero-shot(零样本)意味着'没见过就能认'。通过语言理解新概念，而不需要训练样本。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["clip"],
-          "quiz": {
-            "question": "零样本学习的关键特点是什么？",
-            "options": ["不需要该类别的训练样本", "需要大量训练样本", "只能识别已知类别", "必须重新训练"],
-            "answer": 0
-          }
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "title": "第五章：多模态大模型",
-      "icon": "🔗",
-      "description": "学习如何融合视觉和语言，构建多模态AI系统",
-      "topics": [
-        {
-          "id": "multimodal",
-          "term": "多模态",
-          "english": "Multimodal",
-          "definition": "涉及多种信息模态（如文本、图像、音频、视频）的处理和融合。多模态模型能够理解和生成不同模态的内容，实现跨模态的理解和推理。",
-          "tips": "Multi(多) + Modal(模态)。人类就是多模态的：我们同时处理看到的、听到的、读到的信息。",
-          "difficulty": "beginner",
-          "relatedTopics": ["llava", "gpt4v", "multimodal-fusion"],
-          "quiz": {
-            "question": "以下哪些是不同的模态？",
-            "options": ["文本、图像、音频", "大、中、小", "快、慢", "高、低"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "llava",
-          "term": "LLaVA",
-          "english": "Large Language and Vision Assistant",
-          "definition": "一种将视觉编码器与大语言模型结合的多模态模型。通过视觉指令微调，使模型能够理解图像并进行对话。开源且效果接近商业模型。",
-          "tips": "LLaVA结合了LLaMA(语言)和Vision(视觉)。用简单的投影层连接视觉和语言模块。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["multimodal", "visual-instruction-tuning"],
-          "quiz": {
-            "question": "LLaVA如何连接视觉和语言模块？",
-            "options": ["投影层", "注意力机制", "卷积层", "全连接层"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "gpt4v",
-          "term": "GPT-4V",
-          "english": "GPT-4 Vision",
-          "definition": "OpenAI的多模态大模型，在GPT-4基础上增加了图像理解能力。能够分析图像内容、回答图像相关问题、生成图像描述等，展现了强大的视觉推理能力。",
-          "tips": "V代表Vision(视觉)。GPT-4V是GPT-4的'长了眼睛'版本。",
-          "difficulty": "beginner",
-          "relatedTopics": ["multimodal", "gpt"],
-          "quiz": {
-            "question": "GPT-4V相比GPT-4增加了什么能力？",
-            "options": ["图像理解", "代码生成", "数学推理", "多语言"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "visual-instruction-tuning",
-          "term": "视觉指令微调",
-          "english": "Visual Instruction Tuning",
-          "definition": "使用包含图像的指令-回复对数据对多模态模型进行微调。这种方法使模型能够遵循涉及图像的各种指令，如描述、问答、推理等。",
-          "tips": "用'看图说话'的数据来教模型。数据格式通常是：图像+问题→期望回答。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["llava", "fine-tuning"],
-          "quiz": {
-            "question": "视觉指令微调的数据格式是什么？",
-            "options": ["图像+指令+回复", "纯文本", "纯图像", "音频+文本"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "multimodal-fusion",
-          "term": "多模态融合",
-          "english": "Multimodal Fusion",
-          "definition": "将来自不同模态的信息整合在一起的技术。包括早期融合（在输入层合并）、晚期融合（在决策层合并）和中间融合（在特征层合并）等策略。",
-          "tips": "Fusion(融合)是关键。不同模态的信息需要在某个阶段'汇合'才能协同工作。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["multimodal"],
-          "quiz": {
-            "question": "以下哪个不是多模态融合的策略？",
-            "options": ["随机融合", "早期融合", "晚期融合", "中间融合"],
-            "answer": 0
-          }
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "title": "第六章：图像生成与扩散模型",
+      "id": "multimodal",
+      "name": "多模态AI",
       "icon": "🎨",
-      "description": "探索AI图像生成的前沿技术",
-      "topics": [
+      "chapters": [
         {
-          "id": "diffusion-model",
-          "term": "扩散模型",
-          "english": "Diffusion Model",
-          "definition": "一类生成模型，通过逐步添加噪声将数据转化为纯噪声（前向过程），然后学习逆转这个过程（去噪过程）来生成新样本。是当前最先进的图像生成方法。",
-          "tips": "Diffusion(扩散)像墨水在水中扩散。训练学习如何'逆转扩散'，从噪声中恢复清晰图像。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["stable-diffusion", "vae", "latent-space"],
-          "quiz": {
-            "question": "扩散模型生成图像的过程是？",
-            "options": ["从噪声逐步去噪", "一步直接生成", "从模板复制", "随机采样"],
-            "answer": 0
+          "id": "vision",
+          "title": "视觉理解",
+          "icon": "👁️",
+          "sections": {
+            "terminology": {
+              "title": "专业术语",
+              "items": [
+                {"term": "ViT", "english": "Vision Transformer", "desc": "将图像分块后用Transformer处理"},
+                {"term": "CLIP", "english": "Contrastive Language-Image Pre-training", "desc": "图文对比学习，对齐视觉和语言"},
+                {"term": "对比学习", "english": "Contrastive Learning", "desc": "拉近正样本，推远负样本"},
+                {"term": "零样本学习", "english": "Zero-shot Learning", "desc": "无需训练样本即可分类"},
+                {"term": "图像嵌入", "english": "Image Embedding", "desc": "图像的向量表示"}
+              ]
+            },
+            "basic": {
+              "title": "基础概念",
+              "content": "### Vision Transformer (ViT)\n\n将图像切分为16x16的patch，每个patch作为一个token：\n\n```\n图像 224x224\n    ↓ 分块\n14x14 = 196 个 patch\n    ↓ 线性投影\n196 个 token + 1个CLS token\n    ↓ Transformer\n输出表示\n```\n\n### CLIP 原理\n\n```\n图像编码器 ──→ 图像特征\n                   ↘\n                    对比损失 (正样本接近，负样本远离)\n                   ↗\n文本编码器 ──→ 文本特征\n```\n\n零样本分类：\n```python\n# 计算图像与所有类别文本的相似度\ntext_features = encode(['a photo of a cat', 'a photo of a dog', ...])\nimage_feature = encode(image)\nprobs = softmax(image_feature @ text_features.T)\n```"
+            },
+            "advanced": {
+              "title": "进阶知识",
+              "content": "### 视觉编码器对比\n\n| 模型 | 参数量 | 特点 |\n|------|--------|------|\n| ViT-B/16 | 86M | 基础版本 |\n| ViT-L/14 | 304M | CLIP常用 |\n| EVA-CLIP | 1B+ | 开源最强 |\n| SigLIP | - | Google改进 |\n| InternViT | 6B | 中文多模态 |\n\n### 图像表示方法\n\n1. **全局特征**：CLS token\n2. **局部特征**：所有patch token\n3. **多尺度特征**：不同层输出\n\n### 视觉特征注入LLM\n\n```\n方案1: 投影层\n视觉特征 → Linear → LLM输入空间\n\n方案2: Q-Former (BLIP-2)\n视觉特征 → 可学习Query → 交叉注意力 → 压缩表示\n\n方案3: Resampler (Flamingo)\n视觉特征 → Perceiver Resampler → 固定数量token\n```"
+            },
+            "practice": {
+              "title": "实战代码",
+              "content": "### CLIP 图像分类\n\n```python\nimport torch\nfrom transformers import CLIPProcessor, CLIPModel\nfrom PIL import Image\n\n# 加载模型\nmodel = CLIPModel.from_pretrained('openai/clip-vit-base-patch32')\nprocessor = CLIPProcessor.from_pretrained('openai/clip-vit-base-patch32')\n\n# 准备输入\nimage = Image.open('cat.jpg')\ntexts = ['a photo of a cat', 'a photo of a dog', 'a photo of a bird']\n\ninputs = processor(\n    text=texts,\n    images=image,\n    return_tensors='pt',\n    padding=True\n)\n\n# 推理\nwith torch.no_grad():\n    outputs = model(**inputs)\n    logits = outputs.logits_per_image\n    probs = logits.softmax(dim=1)\n\nfor text, prob in zip(texts, probs[0]):\n    print(f'{text}: {prob:.2%}')\n```\n\n### 图像嵌入提取\n\n```python\nfrom transformers import AutoModel, AutoProcessor\n\n# 使用 SigLIP\nmodel = AutoModel.from_pretrained('google/siglip-base-patch16-224')\nprocessor = AutoProcessor.from_pretrained('google/siglip-base-patch16-224')\n\n# 提取图像特征\nimage = Image.open('image.jpg')\ninputs = processor(images=image, return_tensors='pt')\n\nwith torch.no_grad():\n    image_features = model.get_image_features(**inputs)\n    image_features = image_features / image_features.norm(dim=-1, keepdim=True)\n\nprint(image_features.shape)  # (1, 768)\n```"
+            }
           }
         },
         {
-          "id": "stable-diffusion",
-          "term": "Stable Diffusion",
-          "english": "Stable Diffusion",
-          "definition": "Stability AI开源的文生图模型，在潜空间而非像素空间进行扩散，大大降低计算成本。支持文本到图像、图像到图像、图像修复等多种任务。",
-          "tips": "Stable(稳定)+Diffusion。在压缩的潜空间工作，是当前最流行的开源图像生成模型。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["diffusion-model", "latent-space", "text-to-image"],
-          "quiz": {
-            "question": "Stable Diffusion在哪个空间进行扩散？",
-            "options": ["潜空间", "像素空间", "频率空间", "特征空间"],
-            "answer": 0
+          "id": "vlm",
+          "title": "视觉语言模型",
+          "icon": "🔗",
+          "sections": {
+            "terminology": {
+              "title": "专业术语",
+              "items": [
+                {"term": "VLM", "english": "Vision-Language Model", "desc": "融合视觉和语言的多模态模型"},
+                {"term": "LLaVA", "english": "Large Language and Vision Assistant", "desc": "简单高效的视觉语言模型"},
+                {"term": "视觉指令微调", "english": "Visual Instruction Tuning", "desc": "用图像+指令数据微调"},
+                {"term": "多模态融合", "english": "Multimodal Fusion", "desc": "融合不同模态信息的技术"},
+                {"term": "图像描述", "english": "Image Captioning", "desc": "为图像生成文字描述"}
+              ]
+            },
+            "basic": {
+              "title": "基础概念",
+              "content": "### VLM 架构演进\n\n```\n第一代: 分离式\n视觉编码器 + 语言模型 + 简单连接\n代表: LLaVA-1.0\n\n第二代: 深度融合\n视觉token与文本token交叉注意力\n代表: Flamingo, BLIP-2\n\n第三代: 原生多模态\n从头预训练的统一模型\n代表: GPT-4V, Gemini\n```\n\n### LLaVA 架构\n\n```\n图像 → CLIP ViT → 视觉特征\n                      ↓ 投影层 (MLP)\n                   视觉token\n                      ↓\n文本 → Tokenizer → 文本token → 拼接 → LLM → 输出\n```\n\n### 主流 VLM 对比\n\n| 模型 | 视觉编码器 | LLM | 开源 |\n|------|------------|-----|------|\n| GPT-4V | 未知 | GPT-4 | ❌ |\n| LLaVA-1.6 | CLIP | Llama | ✅ |\n| Qwen-VL | 自研 | Qwen | ✅ |\n| InternVL | InternViT | InternLM | ✅ |"
+            },
+            "advanced": {
+              "title": "进阶知识",
+              "content": "### 高分辨率处理\n\n**问题**：ViT 通常只支持 224x224 或 336x336\n\n**解决方案**：\n\n1. **动态分辨率 (LLaVA-1.6)**\n```\n原图 → 分割成多个336x336块\n     → 每块独立编码\n     → 拼接所有特征\n```\n\n2. **分层采样**\n```\n全局特征 (缩放到固定尺寸)\n   +\n局部特征 (高分辨率裁剪)\n```\n\n### 视频理解\n\n```python\n# 均匀采样帧\nframes = sample_frames(video, num_frames=8)\n\n# 每帧编码\nframe_features = [encode(f) for f in frames]\n\n# 时序建模\n方案1: 拼接所有帧特征\n方案2: 时序Transformer\n方案3: 3D卷积\n```\n\n### 训练数据类型\n\n1. **图像描述**：简单描述图像内容\n2. **VQA**：图像问答对\n3. **OCR**：文字识别\n4. **图表理解**：Chart/表格\n5. **多轮对话**：复杂推理"
+            },
+            "practice": {
+              "title": "实战代码",
+              "content": "### 使用 LLaVA\n\n```python\nfrom transformers import LlavaNextProcessor, LlavaNextForConditionalGeneration\nfrom PIL import Image\nimport torch\n\n# 加载模型\nmodel = LlavaNextForConditionalGeneration.from_pretrained(\n    'llava-hf/llava-v1.6-mistral-7b-hf',\n    torch_dtype=torch.float16,\n    device_map='auto'\n)\nprocessor = LlavaNextProcessor.from_pretrained('llava-hf/llava-v1.6-mistral-7b-hf')\n\n# 准备输入\nimage = Image.open('image.jpg')\nconversation = [\n    {\n        'role': 'user',\n        'content': [\n            {'type': 'image'},\n            {'type': 'text', 'text': '描述这张图片'}\n        ]\n    }\n]\n\nprompt = processor.apply_chat_template(conversation, add_generation_prompt=True)\ninputs = processor(prompt, image, return_tensors='pt').to(model.device)\n\n# 生成\noutput = model.generate(**inputs, max_new_tokens=512)\nresponse = processor.decode(output[0], skip_special_tokens=True)\nprint(response)\n```\n\n### 使用 Qwen-VL\n\n```python\nfrom transformers import Qwen2VLForConditionalGeneration, Qwen2VLProcessor\n\nmodel = Qwen2VLForConditionalGeneration.from_pretrained(\n    'Qwen/Qwen2-VL-7B-Instruct',\n    torch_dtype=torch.bfloat16,\n    device_map='auto'\n)\nprocessor = Qwen2VLProcessor.from_pretrained('Qwen/Qwen2-VL-7B-Instruct')\n\nmessages = [\n    {\n        'role': 'user',\n        'content': [\n            {'type': 'image', 'image': 'image.jpg'},\n            {'type': 'text', 'text': '这是什么？'}\n        ]\n    }\n]\n\ntext = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)\ninputs = processor(text=text, images=[Image.open('image.jpg')], return_tensors='pt')\n\noutputs = model.generate(**inputs.to(model.device), max_new_tokens=256)\nprint(processor.decode(outputs[0], skip_special_tokens=True))\n```"
+            }
           }
         },
         {
-          "id": "vae",
-          "term": "VAE",
-          "english": "Variational Autoencoder",
-          "definition": "变分自编码器，一种生成模型。将数据编码到一个潜在空间的概率分布，再从分布中采样解码生成新数据。在Stable Diffusion中用于图像压缩。",
-          "tips": "VAE = Encoder(编码器) + 潜在空间 + Decoder(解码器)。学习数据的压缩表示。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["latent-space", "stable-diffusion"],
-          "quiz": {
-            "question": "VAE的核心功能是什么？",
-            "options": ["编码和解码数据", "分类图像", "检测物体", "分割图像"],
-            "answer": 0
+          "id": "image-gen",
+          "title": "图像生成",
+          "icon": "🎨",
+          "sections": {
+            "terminology": {
+              "title": "专业术语",
+              "items": [
+                {"term": "扩散模型", "english": "Diffusion Model", "desc": "通过去噪过程生成图像"},
+                {"term": "Stable Diffusion", "english": "Stable Diffusion", "desc": "在潜空间进行扩散的开源模型"},
+                {"term": "VAE", "english": "Variational Autoencoder", "desc": "编码解码器，压缩图像到潜空间"},
+                {"term": "潜空间", "english": "Latent Space", "desc": "低维压缩表示空间"},
+                {"term": "CFG", "english": "Classifier-Free Guidance", "desc": "控制生成与提示词的一致性"},
+                {"term": "LoRA", "english": "Low-Rank Adaptation", "desc": "轻量级微调方法"},
+                {"term": "ControlNet", "english": "ControlNet", "desc": "添加额外控制条件的模型"}
+              ]
+            },
+            "basic": {
+              "title": "基础概念",
+              "content": "### 扩散模型原理\n\n```\n前向过程（加噪）:\n清晰图像 → 逐步加噪 → 纯噪声\n   x_0   →    ...    →  x_T\n\n反向过程（去噪）:\n纯噪声  → 逐步去噪 → 清晰图像\n  x_T   ←    ...    ←   x_0\n```\n\n### Stable Diffusion 架构\n\n```\n文本 → CLIP文本编码器 → 文本嵌入\n                           ↓\n噪声 → U-Net (去噪) ← 交叉注意力 → 潜空间图像\n                           ↓\n              VAE解码器 → 最终图像\n```\n\n### 关键参数\n\n| 参数 | 作用 | 推荐值 |\n|------|------|--------|\n| Steps | 去噪步数 | 20-50 |\n| CFG Scale | 提示词权重 | 7-12 |\n| Sampler | 采样器 | DPM++ 2M |\n| Seed | 随机种子 | 固定可复现 |"
+            },
+            "advanced": {
+              "title": "进阶知识",
+              "content": "### SDXL vs SD 1.5\n\n| 特性 | SD 1.5 | SDXL |\n|------|--------|------|\n| 分辨率 | 512x512 | 1024x1024 |\n| 参数量 | 860M | 2.6B |\n| 文本编码 | CLIP | CLIP + OpenCLIP |\n| 质量 | 良好 | 优秀 |\n\n### ControlNet 类型\n\n```\nCanny: 边缘控制\nDepth: 深度图控制\nPose: 人体姿态控制\nSeg: 语义分割控制\nLineart: 线稿控制\n```\n\n### 图像编辑技术\n\n1. **Inpainting**：局部重绘\n2. **Outpainting**：图像扩展\n3. **Image-to-Image**：风格转换\n4. **Instruct-Pix2Pix**：指令编辑\n\n### 提示词工程\n\n```\n正面提示词结构：\n[质量词] + [主体描述] + [风格] + [细节]\n\n例如：\nmasterpiece, best quality,\n1girl, long hair, blue eyes, smile,\nanime style, detailed background,\nsoft lighting, 8k\n\n负面提示词：\nlowres, bad anatomy, worst quality,\nblurry, watermark, text\n```"
+            },
+            "practice": {
+              "title": "实战代码",
+              "content": "### Diffusers 文生图\n\n```python\nimport torch\nfrom diffusers import StableDiffusionXLPipeline\n\n# 加载SDXL\npipe = StableDiffusionXLPipeline.from_pretrained(\n    'stabilityai/stable-diffusion-xl-base-1.0',\n    torch_dtype=torch.float16,\n    variant='fp16'\n).to('cuda')\n\n# 生成\nimage = pipe(\n    prompt='a cat wearing sunglasses, photorealistic, 8k',\n    negative_prompt='blurry, low quality',\n    num_inference_steps=30,\n    guidance_scale=7.5,\n    width=1024,\n    height=1024\n).images[0]\n\nimage.save('cat.png')\n```\n\n### 加载 LoRA\n\n```python\nfrom diffusers import StableDiffusionXLPipeline\n\npipe = StableDiffusionXLPipeline.from_pretrained(...)\n\n# 加载LoRA权重\npipe.load_lora_weights('path/to/lora.safetensors')\n\n# 调整LoRA强度\npipe.fuse_lora(lora_scale=0.8)\n\n# 生成\nimage = pipe('触发词 + 描述').images[0]\n```\n\n### ControlNet 控制生成\n\n```python\nfrom diffusers import StableDiffusionXLControlNetPipeline, ControlNetModel\nimport cv2\nimport numpy as np\n\n# Canny边缘检测\nimage = cv2.imread('input.jpg')\nedges = cv2.Canny(image, 100, 200)\n\n# 加载ControlNet\ncontrolnet = ControlNetModel.from_pretrained(\n    'diffusers/controlnet-canny-sdxl-1.0',\n    torch_dtype=torch.float16\n)\n\npipe = StableDiffusionXLControlNetPipeline.from_pretrained(\n    'stabilityai/stable-diffusion-xl-base-1.0',\n    controlnet=controlnet,\n    torch_dtype=torch.float16\n).to('cuda')\n\n# 生成\nimage = pipe(\n    prompt='anime girl',\n    image=edges,\n    controlnet_conditioning_scale=0.8\n).images[0]\n```\n\n### ComfyUI API 调用\n\n```python\nimport requests\nimport json\n\n# 加载工作流\nwith open('workflow.json') as f:\n    workflow = json.load(f)\n\n# 修改参数\nworkflow['6']['inputs']['text'] = 'your prompt'\n\n# 发送请求\nresponse = requests.post(\n    'http://127.0.0.1:8188/prompt',\n    json={'prompt': workflow}\n)\n```"
+            }
           }
         },
         {
-          "id": "latent-space",
-          "term": "潜空间",
-          "english": "Latent Space",
-          "definition": "数据的压缩表示空间。在这个低维空间中，语义相似的数据点距离接近。Stable Diffusion在64x64的潜空间而非512x512像素空间操作，效率大增。",
-          "tips": "Latent(潜在的)Space(空间)。像是数据的'本质'所在的空间，维度更低但信息保留。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["vae", "stable-diffusion"],
-          "quiz": {
-            "question": "潜空间相比原始数据空间通常？",
-            "options": ["维度更低", "维度更高", "完全相同", "随机变化"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "text-to-image",
-          "term": "文本到图像",
-          "english": "Text-to-Image",
-          "definition": "根据自然语言描述生成对应图像的任务。DALL-E、Midjourney、Stable Diffusion都是文生图模型。通过文本编码器将提示词转化为条件向量引导图像生成。",
-          "tips": "Text(文本)→Image(图像)。用文字描述，AI画出来。Prompt(提示词)是关键。",
-          "difficulty": "beginner",
-          "relatedTopics": ["stable-diffusion", "diffusion-model"],
-          "quiz": {
-            "question": "以下哪个是文生图模型？",
-            "options": ["Stable Diffusion", "BERT", "GPT", "ResNet"],
-            "answer": 0
+          "id": "audio",
+          "title": "语音与音频",
+          "icon": "🎵",
+          "sections": {
+            "terminology": {
+              "title": "专业术语",
+              "items": [
+                {"term": "ASR", "english": "Automatic Speech Recognition", "desc": "语音转文字"},
+                {"term": "TTS", "english": "Text-to-Speech", "desc": "文字转语音"},
+                {"term": "Whisper", "english": "Whisper", "desc": "OpenAI的多语言语音识别模型"},
+                {"term": "语音克隆", "english": "Voice Cloning", "desc": "复制特定人的声音"},
+                {"term": "Mel频谱", "english": "Mel Spectrogram", "desc": "音频的时频表示"}
+              ]
+            },
+            "basic": {
+              "title": "基础概念",
+              "content": "### 语音AI任务\n\n```\n语音识别 (ASR): 语音 → 文字\n语音合成 (TTS): 文字 → 语音\n语音翻译: 语音A语言 → 文字B语言\n说话人识别: 识别说话者身份\n语音克隆: 复制声音特征\n```\n\n### Whisper 架构\n\n```\n音频 → Mel频谱 → 编码器 (Transformer)\n                      ↓\n              解码器 (Transformer) → 文本\n                      ↑\n               任务token (转录/翻译/时间戳)\n```\n\n### TTS 发展\n\n```\n传统方法: 拼接合成、参数合成\n    ↓\n神经网络: Tacotron → WaveNet\n    ↓\n端到端: VITS, Bark, ChatTTS\n    ↓\n大模型时代: GPT-SoVITS, Fish-Speech\n```"
+            },
+            "advanced": {
+              "title": "进阶知识",
+              "content": "### Whisper 模型规格\n\n| 模型 | 参数量 | 英语WER | 速度 |\n|------|--------|---------|------|\n| tiny | 39M | ~10% | 32x |\n| base | 74M | ~7% | 16x |\n| small | 244M | ~5% | 6x |\n| medium | 769M | ~4% | 2x |\n| large-v3 | 1.5B | ~3% | 1x |\n\n### 实时语音技术\n\n```\n流式ASR:\n音频流 → 分块 → 模型推理 → 流式输出\n                  ↓\n            缓冲区管理\n            VAD检测\n\n实时TTS:\n文本 → 分句 → 并行合成 → 音频流\n```\n\n### 语音克隆方法\n\n1. **Zero-shot**: 几秒参考音频即可\n2. **Few-shot**: 几分钟数据微调\n3. **Fine-tune**: 完整训练"
+            },
+            "practice": {
+              "title": "实战代码",
+              "content": "### Whisper 语音识别\n\n```python\nimport whisper\n\n# 加载模型\nmodel = whisper.load_model('large-v3')\n\n# 转录\nresult = model.transcribe(\n    'audio.mp3',\n    language='zh',\n    task='transcribe'\n)\n\nprint(result['text'])\n\n# 带时间戳\nfor segment in result['segments']:\n    print(f\"[{segment['start']:.2f} - {segment['end']:.2f}] {segment['text']}\")\n```\n\n### Faster-Whisper (更快)\n\n```python\nfrom faster_whisper import WhisperModel\n\nmodel = WhisperModel('large-v3', device='cuda', compute_type='float16')\n\nsegments, info = model.transcribe('audio.mp3', language='zh')\n\nfor segment in segments:\n    print(f\"[{segment.start:.2f}s -> {segment.end:.2f}s] {segment.text}\")\n```\n\n### Edge-TTS (免费TTS)\n\n```python\nimport edge_tts\nimport asyncio\n\nasync def text_to_speech(text, output_file):\n    communicate = edge_tts.Communicate(\n        text,\n        voice='zh-CN-XiaoxiaoNeural'  # 中文女声\n    )\n    await communicate.save(output_file)\n\nasyncio.run(text_to_speech('你好世界', 'output.mp3'))\n```\n\n### GPT-SoVITS 语音克隆\n\n```python\n# 参考音频 + 参考文本 → 克隆目标声音\n\n# 1. 准备参考音频 (3-10秒清晰语音)\n# 2. 写出参考文本 (对应音频内容)\n# 3. 调用API\n\nimport requests\n\nresponse = requests.post(\n    'http://localhost:9880/tts',\n    json={\n        'text': '要合成的文本',\n        'ref_audio': 'reference.wav',\n        'ref_text': '参考音频的文本内容'\n    }\n)\n\nwith open('output.wav', 'wb') as f:\n    f.write(response.content)\n```"
+            }
           }
         }
       ]
     },
     {
-      "id": 7,
-      "title": "第七章：语音与音频AI",
-      "icon": "🎵",
-      "description": "学习语音识别、合成和音频处理技术",
-      "topics": [
-        {
-          "id": "asr",
-          "term": "ASR",
-          "english": "Automatic Speech Recognition",
-          "definition": "自动语音识别，将语音信号转换为文本的技术。现代ASR系统如Whisper使用端到端深度学习，不再需要复杂的声学模型和语言模型流水线。",
-          "tips": "ASR就是'听写'技术。语音输入→文字输出。Whisper是OpenAI的强大ASR模型。",
-          "difficulty": "beginner",
-          "relatedTopics": ["whisper", "tts"],
-          "quiz": {
-            "question": "ASR的功能是什么？",
-            "options": ["语音转文字", "文字转语音", "图像识别", "语言翻译"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "whisper",
-          "term": "Whisper",
-          "english": "Whisper",
-          "definition": "OpenAI发布的多语言语音识别模型。在68万小时的多语言音频上训练，支持语音转录、翻译等任务。鲁棒性强，能处理多种口音和噪声环境。",
-          "tips": "Whisper(低语)，能听懂各种'低声细语'。多语言、多任务、强鲁棒性是其特点。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["asr"],
-          "quiz": {
-            "question": "Whisper的突出特点是什么？",
-            "options": ["多语言和强鲁棒性", "只支持英语", "仅用于音乐", "实时生成"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "tts",
-          "term": "TTS",
-          "english": "Text-to-Speech",
-          "definition": "文本到语音合成，将文字转换为自然语音。现代TTS如VITS、Bark等使用神经网络直接生成高质量语音波形，可以控制说话人、情感、语速等。",
-          "tips": "TTS与ASR相反。文字输入→语音输出。让AI'开口说话'。",
-          "difficulty": "beginner",
-          "relatedTopics": ["asr", "voice-cloning"],
-          "quiz": {
-            "question": "TTS的功能是什么？",
-            "options": ["文字转语音", "语音转文字", "语音翻译", "语音增强"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "voice-cloning",
-          "term": "语音克隆",
-          "english": "Voice Cloning",
-          "definition": "学习特定说话人的声音特征，使TTS系统能够用该声音合成任意文本。可以用少量语音样本（甚至几秒钟）克隆出逼真的声音。",
-          "tips": "Clone(克隆)声音。听几秒样本，就能模仿你的声音说任何话。存在伦理争议。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["tts"],
-          "quiz": {
-            "question": "语音克隆需要的样本量通常？",
-            "options": ["很少，甚至几秒", "需要几小时", "需要几天", "需要完整语料库"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "mel-spectrogram",
-          "term": "Mel频谱",
-          "english": "Mel Spectrogram",
-          "definition": "一种音频的时频表示，将频率轴转换为更符合人耳感知的Mel刻度。是语音处理中常用的特征表示，便于神经网络处理音频。",
-          "tips": "Mel模拟人耳对频率的感知（低频分辨率高，高频分辨率低）。是音频的'图像'表示。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["asr", "tts"],
-          "quiz": {
-            "question": "Mel频谱的设计目的是什么？",
-            "options": ["模拟人耳感知", "压缩文件大小", "加速处理", "增加清晰度"],
-            "answer": 0
-          }
-        }
-      ]
-    },
-    {
-      "id": 8,
-      "title": "第八章：视频理解与生成",
-      "icon": "🎬",
-      "description": "探索AI如何理解和创造视频内容",
-      "topics": [
-        {
-          "id": "video-understanding",
-          "term": "视频理解",
-          "english": "Video Understanding",
-          "definition": "让AI理解视频内容的任务，包括动作识别、视频问答、视频摘要等。视频比图像多了时间维度，需要同时建模空间和时间信息。",
-          "tips": "视频=图像序列+时间。需要理解'发生了什么'以及'先后顺序'。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["timesformer", "videomae"],
-          "quiz": {
-            "question": "视频理解比图像理解多了什么维度？",
-            "options": ["时间维度", "颜色维度", "空间维度", "语义维度"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "timesformer",
-          "term": "TimeSformer",
-          "english": "TimeSformer",
-          "definition": "Facebook提出的视频Transformer，将时间和空间注意力分开计算（分解注意力）。先在每帧内做空间注意力，再跨帧做时间注意力，大幅降低计算量。",
-          "tips": "Time(时间) + S(pace/Spatial) + former(Transformer)。时空分解注意力是关键。",
-          "difficulty": "expert",
-          "relatedTopics": ["transformer", "video-understanding"],
-          "quiz": {
-            "question": "TimeSformer如何处理时空注意力？",
-            "options": ["分解为空间和时间分别计算", "联合计算", "只计算空间", "只计算时间"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "sora",
-          "term": "Sora",
-          "english": "Sora",
-          "definition": "OpenAI发布的文本到视频生成模型，能生成长达1分钟的高质量视频。采用扩散Transformer架构，理解物理世界规律，被视为通向世界模型的一步。",
-          "tips": "Sora(日语'空')。目标是理解和模拟物理世界。视频生成的里程碑。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["diffusion-model", "video-diffusion"],
-          "quiz": {
-            "question": "Sora的主要突破是什么？",
-            "options": ["生成长达1分钟的连贯视频", "实时视频生成", "3D建模", "动作捕捉"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "video-diffusion",
-          "term": "视频扩散模型",
-          "english": "Video Diffusion Model",
-          "definition": "将扩散模型扩展到视频生成的方法。需要同时建模空间和时间的噪声过程，生成时间一致性好的视频序列。计算量巨大是主要挑战。",
-          "tips": "图像扩散模型的3D版本。去噪过程需要保证帧与帧之间的一致性。",
-          "difficulty": "expert",
-          "relatedTopics": ["diffusion-model", "sora"],
-          "quiz": {
-            "question": "视频扩散模型的主要挑战是什么？",
-            "options": ["计算量巨大和时间一致性", "数据不足", "模型太小", "标注困难"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "videomae",
-          "term": "VideoMAE",
-          "english": "Video Masked Autoencoder",
-          "definition": "将MAE(掩码自编码器)应用于视频的自监督学习方法。随机遮盖视频的大部分时空块，让模型预测被遮盖的内容，学习时空表示。",
-          "tips": "Video + MAE。遮盖90%以上的视频内容，强迫模型理解时空关系才能重建。",
-          "difficulty": "expert",
-          "relatedTopics": ["mlm", "video-understanding"],
-          "quiz": {
-            "question": "VideoMAE的预训练方法是什么？",
-            "options": ["遮盖并重建视频块", "对比学习", "分类任务", "生成对抗"],
-            "answer": 0
-          }
-        }
-      ]
-    },
-    {
-      "id": 9,
-      "title": "第九章：模型优化与部署",
-      "icon": "⚡",
-      "description": "学习如何让大模型更高效地运行",
-      "topics": [
-        {
-          "id": "quantization",
-          "term": "量化",
-          "english": "Quantization",
-          "definition": "将模型参数从高精度（如FP32/FP16）转换为低精度（如INT8/INT4）的技术。可以大幅减少模型体积和推理时间，同时保持较好的性能。",
-          "tips": "Quantization(量化)就是降低数值精度。从32位降到8位甚至4位，体积减少4-8倍。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["inference-optimization", "pruning"],
-          "quiz": {
-            "question": "量化的主要目的是什么？",
-            "options": ["减少模型体积和加速推理", "提高精度", "增加参数", "数据增强"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "lora",
-          "term": "LoRA",
-          "english": "Low-Rank Adaptation",
-          "definition": "一种参数高效的微调方法。冻结原始模型权重，只训练两个小的低秩矩阵A和B，其乘积近似权重更新。可以用不到1%的参数达到接近全量微调的效果。",
-          "tips": "Low-Rank(低秩)是关键。不改原始权重，而是'打补丁'。训练参数少，效果好。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["fine-tuning"],
-          "quiz": {
-            "question": "LoRA如何减少训练参数量？",
-            "options": ["使用低秩矩阵近似", "减少层数", "缩小词表", "删除注意力"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "knowledge-distillation",
-          "term": "知识蒸馏",
-          "english": "Knowledge Distillation",
-          "definition": "将大模型（教师）的知识转移到小模型（学生）的技术。学生模型学习教师的软标签（概率分布），而非硬标签，从而获得更好的泛化能力。",
-          "tips": "Distillation(蒸馏)。大模型当老师，教小模型学习，不只是对错，还包括'置信度'。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["quantization", "pruning"],
-          "quiz": {
-            "question": "知识蒸馏中，学生模型学习的是什么？",
-            "options": ["教师模型的软标签", "原始数据", "硬标签", "梯度信息"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "pruning",
-          "term": "剪枝",
-          "english": "Pruning",
-          "definition": "移除神经网络中不重要的权重或神经元以减小模型规模。包括非结构化剪枝（移除单个权重）和结构化剪枝（移除整个通道/层）。",
-          "tips": "Pruning(修剪)像修剪树枝，去掉不重要的部分。网络中很多权重接近0，可以直接删除。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["quantization", "knowledge-distillation"],
-          "quiz": {
-            "question": "剪枝技术的目标是什么？",
-            "options": ["移除不重要的权重", "增加层数", "扩大模型", "添加噪声"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "inference-optimization",
-          "term": "推理优化",
-          "english": "Inference Optimization",
-          "definition": "提高模型推理速度的各种技术，包括KV缓存、批处理、算子融合、硬件加速等。对于大模型部署至关重要。",
-          "tips": "Inference(推理)是模型实际运行时。训练慢可以接受，推理要快才能实用。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["quantization"],
-          "quiz": {
-            "question": "以下哪个是推理优化技术？",
-            "options": ["KV缓存", "反向传播", "数据增强", "随机失活"],
-            "answer": 0
-          }
-        }
-      ]
-    },
-    {
-      "id": 10,
-      "title": "第十章：前沿话题与未来趋势",
+      "id": "deployment",
+      "name": "部署与优化",
       "icon": "🚀",
-      "description": "展望AI的前沿研究方向",
-      "topics": [
+      "chapters": [
         {
-          "id": "emergent-abilities",
-          "term": "涌现能力",
-          "english": "Emergent Abilities",
-          "definition": "大模型在规模达到一定阈值后突然出现的能力，如推理、代码生成等。这些能力在小模型上不存在，仿佛是'涌现'出来的，引发了对规模法则的关注。",
-          "tips": "Emergent(涌现)意为'突然出现'。量变引起质变，大模型'顿悟'了新能力。",
-          "difficulty": "expert",
-          "relatedTopics": ["rlhf", "world-model"],
-          "quiz": {
-            "question": "涌现能力的特点是什么？",
-            "options": ["在达到一定规模后突然出现", "任何规模都有", "随规模线性增长", "规模越小越强"],
-            "answer": 0
+          "id": "optimization",
+          "title": "模型优化",
+          "icon": "⚡",
+          "sections": {
+            "terminology": {
+              "title": "专业术语",
+              "items": [
+                {"term": "量化", "english": "Quantization", "desc": "降低数值精度减小模型体积"},
+                {"term": "剪枝", "english": "Pruning", "desc": "移除不重要的权重"},
+                {"term": "知识蒸馏", "english": "Knowledge Distillation", "desc": "大模型教小模型"},
+                {"term": "混合精度", "english": "Mixed Precision", "desc": "同时使用FP16和FP32"},
+                {"term": "算子融合", "english": "Operator Fusion", "desc": "合并多个操作减少开销"}
+              ]
+            },
+            "basic": {
+              "title": "基础概念",
+              "content": "### 量化级别\n\n| 类型 | 精度 | 体积 | 质量损失 |\n|------|------|------|----------|\n| FP32 | 32位 | 100% | 无 |\n| FP16 | 16位 | 50% | 极小 |\n| INT8 | 8位 | 25% | 小 |\n| INT4 | 4位 | 12.5% | 中等 |\n\n### 量化方法\n\n```\n训练后量化 (PTQ):\n训练好的模型 → 校准数据集 → 量化模型\n优点: 简单快速\n缺点: 可能有精度损失\n\n量化感知训练 (QAT):\n训练时模拟量化 → 量化模型\n优点: 精度更高\n缺点: 需要重新训练\n```\n\n### 常用量化格式\n\n- **GPTQ**: GPU友好，4bit常用\n- **AWQ**: 激活感知，质量好\n- **GGUF**: llama.cpp格式，CPU友好\n- **bitsandbytes**: HF集成，简单易用"
+            },
+            "advanced": {
+              "title": "进阶知识",
+              "content": "### 推理优化技术栈\n\n```\n模型层面:\n├── 量化 (INT8/INT4)\n├── 剪枝 (结构化/非结构化)\n└── 蒸馏 (教师-学生)\n\n计算层面:\n├── Flash Attention\n├── KV Cache\n├── 算子融合\n└── 批处理优化\n\n系统层面:\n├── 张量并行\n├── 流水线并行\n└── 分页注意力 (PagedAttention)\n```\n\n### KV Cache 优化\n\n```\n问题: 每次生成新token都要计算历史attention\n\n解决: 缓存历史K、V\n内存占用 = 2 × num_layers × seq_len × hidden_dim × 2bytes\n\n7B模型，2048 seq_len:\n= 2 × 32 × 2048 × 4096 × 2 ≈ 1GB\n\nPagedAttention: 动态分配，减少浪费\n```\n\n### 服务框架对比\n\n| 框架 | 特点 | 适用场景 |\n|------|------|----------|\n| vLLM | PagedAttention | 高吞吐 |\n| TGI | HF官方 | 通用 |\n| Ollama | 简单易用 | 本地 |\n| TensorRT-LLM | NVIDIA优化 | 性能极致 |"
+            },
+            "practice": {
+              "title": "实战代码",
+              "content": "### bitsandbytes 4-bit 量化\n\n```python\nfrom transformers import AutoModelForCausalLM, BitsAndBytesConfig\n\nbnb_config = BitsAndBytesConfig(\n    load_in_4bit=True,\n    bnb_4bit_quant_type='nf4',\n    bnb_4bit_compute_dtype=torch.bfloat16,\n    bnb_4bit_use_double_quant=True\n)\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    'Qwen/Qwen2.5-7B-Instruct',\n    quantization_config=bnb_config,\n    device_map='auto'\n)\n```\n\n### GPTQ 量化\n\n```python\nfrom transformers import AutoModelForCausalLM, GPTQConfig\n\ngptq_config = GPTQConfig(\n    bits=4,\n    dataset='c4',\n    tokenizer=tokenizer\n)\n\nmodel = AutoModelForCausalLM.from_pretrained(\n    'model-name',\n    quantization_config=gptq_config,\n    device_map='auto'\n)\n\n# 保存量化模型\nmodel.save_pretrained('model-gptq-4bit')\n```\n\n### vLLM 高性能推理\n\n```python\nfrom vllm import LLM, SamplingParams\n\n# 初始化\nllm = LLM(\n    model='Qwen/Qwen2.5-7B-Instruct',\n    tensor_parallel_size=1,  # GPU数量\n    gpu_memory_utilization=0.9\n)\n\n# 批量推理\nparams = SamplingParams(\n    temperature=0.7,\n    top_p=0.9,\n    max_tokens=512\n)\n\nprompts = ['问题1', '问题2', '问题3']\noutputs = llm.generate(prompts, params)\n\nfor output in outputs:\n    print(output.outputs[0].text)\n```\n\n### llama.cpp 量化\n\n```bash\n# 转换为GGUF\npython convert_hf_to_gguf.py model_dir --outtype f16\n\n# 量化\n./quantize model.gguf model-q4_k_m.gguf q4_k_m\n\n# 运行\n./llama-cli -m model-q4_k_m.gguf -p \"Hello\" -n 128\n```"
+            }
           }
         },
         {
-          "id": "rlhf",
-          "term": "RLHF",
-          "english": "Reinforcement Learning from Human Feedback",
-          "definition": "利用人类反馈的强化学习，用于对齐大模型行为。先训练奖励模型学习人类偏好，再用强化学习优化语言模型输出。是ChatGPT成功的关键技术。",
-          "tips": "RL(强化学习) + HF(人类反馈)。人类给AI打分，AI学习如何让人满意。",
-          "difficulty": "intermediate",
-          "relatedTopics": ["dpo"],
-          "quiz": {
-            "question": "RLHF的核心思想是什么？",
-            "options": ["使用人类偏好训练模型", "无监督学习", "规则编程", "模板匹配"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "dpo",
-          "term": "DPO",
-          "english": "Direct Preference Optimization",
-          "definition": "一种简化RLHF的方法，不需要单独训练奖励模型。直接使用偏好数据优化语言模型策略，将奖励函数隐式地编码在语言模型目标中。",
-          "tips": "Direct(直接)是关键。跳过奖励模型，直接从偏好数据学习，更简单高效。",
-          "difficulty": "expert",
-          "relatedTopics": ["rlhf"],
-          "quiz": {
-            "question": "DPO相比RLHF的优势是什么？",
-            "options": ["不需要单独训练奖励模型", "需要更多数据", "计算量更大", "效果更差"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "world-model",
-          "term": "世界模型",
-          "english": "World Model",
-          "definition": "能够理解和模拟物理世界规律的AI系统。不仅能识别内容，还能预测事物的变化、因果关系。被认为是通向AGI的重要方向。",
-          "tips": "World Model = AI对世界运作方式的'内在模拟器'。理解物体会掉落、火会烧伤等常识。",
-          "difficulty": "expert",
-          "relatedTopics": ["embodied-ai", "sora"],
-          "quiz": {
-            "question": "世界模型需要理解什么？",
-            "options": ["物理规律和因果关系", "只需要分类", "只需要生成", "只需要记忆"],
-            "answer": 0
-          }
-        },
-        {
-          "id": "embodied-ai",
-          "term": "具身智能",
-          "english": "Embodied AI",
-          "definition": "将AI与物理实体（机器人）结合，使其能在真实世界中感知、决策和行动。需要处理传感器输入、运动规划、环境交互等挑战。",
-          "tips": "Embodied(具身的)意为'有身体的'。让AI不只是软件，而是能在现实世界行动的机器人。",
-          "difficulty": "expert",
-          "relatedTopics": ["world-model"],
-          "quiz": {
-            "question": "具身智能的核心特点是什么？",
-            "options": ["AI与物理实体结合", "纯软件系统", "只处理文本", "只处理图像"],
-            "answer": 0
+          "id": "serving",
+          "title": "模型部署",
+          "icon": "🌐",
+          "sections": {
+            "terminology": {
+              "title": "专业术语",
+              "items": [
+                {"term": "推理服务", "english": "Inference Serving", "desc": "提供模型推理的服务"},
+                {"term": "API网关", "english": "API Gateway", "desc": "管理和路由API请求"},
+                {"term": "负载均衡", "english": "Load Balancing", "desc": "分发请求到多个实例"},
+                {"term": "自动扩缩", "english": "Auto Scaling", "desc": "根据负载自动调整实例数"},
+                {"term": "容器化", "english": "Containerization", "desc": "使用Docker打包应用"}
+              ]
+            },
+            "basic": {
+              "title": "基础概念",
+              "content": "### 部署架构\n\n```\n客户端\n   ↓\nAPI网关 (Nginx/Kong)\n   ↓\n负载均衡\n   ↓\n┌─────────────────────────┐\n│  推理服务集群           │\n│  ├── vLLM实例1          │\n│  ├── vLLM实例2          │\n│  └── vLLM实例3          │\n└─────────────────────────┘\n   ↓\n模型存储 (S3/OSS)\n```\n\n### 部署方式对比\n\n| 方式 | 优点 | 缺点 |\n|------|------|------|\n| 本地 | 简单 | 不可扩展 |\n| Docker | 可移植 | 需要编排 |\n| K8s | 可扩展 | 复杂 |\n| Serverless | 按需付费 | 冷启动 |\n| 云API | 零运维 | 成本高 |"
+            },
+            "advanced": {
+              "title": "进阶知识",
+              "content": "### Kubernetes 部署\n\n```yaml\napiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: llm-service\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: llm\n  template:\n    spec:\n      containers:\n      - name: vllm\n        image: vllm/vllm-openai:latest\n        resources:\n          limits:\n            nvidia.com/gpu: 1\n        args:\n          - --model=Qwen/Qwen2.5-7B-Instruct\n          - --port=8000\n```\n\n### 监控指标\n\n```\n核心指标:\n├── QPS (每秒请求数)\n├── Latency (延迟)\n│   ├── P50, P90, P99\n│   ├── TTFT (首token时间)\n│   └── TPS (每秒token数)\n├── GPU利用率\n└── 内存使用\n```\n\n### 成本优化\n\n1. **Spot实例**: 节省70%\n2. **模型量化**: 减少GPU需求\n3. **批处理**: 提高吞吐\n4. **智能路由**: 简单请求用小模型"
+            },
+            "practice": {
+              "title": "实战代码",
+              "content": "### FastAPI + vLLM\n\n```python\nfrom fastapi import FastAPI\nfrom vllm import LLM, SamplingParams\nfrom pydantic import BaseModel\n\napp = FastAPI()\nllm = LLM(model='Qwen/Qwen2.5-7B-Instruct')\n\nclass ChatRequest(BaseModel):\n    messages: list\n    temperature: float = 0.7\n    max_tokens: int = 512\n\n@app.post('/v1/chat/completions')\nasync def chat(request: ChatRequest):\n    # 构建prompt\n    prompt = format_messages(request.messages)\n    \n    params = SamplingParams(\n        temperature=request.temperature,\n        max_tokens=request.max_tokens\n    )\n    \n    outputs = llm.generate([prompt], params)\n    \n    return {\n        'choices': [{\n            'message': {\n                'role': 'assistant',\n                'content': outputs[0].outputs[0].text\n            }\n        }]\n    }\n```\n\n### Docker 部署\n\n```dockerfile\n# Dockerfile\nFROM nvidia/cuda:12.1-runtime-ubuntu22.04\n\nRUN pip install vllm fastapi uvicorn\n\nCOPY app.py /app/\nWORKDIR /app\n\nCMD [\"uvicorn\", \"app:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\"]\n```\n\n```bash\n# 构建和运行\ndocker build -t llm-service .\ndocker run --gpus all -p 8000:8000 llm-service\n```\n\n### Nginx 负载均衡\n\n```nginx\nupstream llm_backend {\n    least_conn;\n    server llm1:8000 weight=1;\n    server llm2:8000 weight=1;\n    server llm3:8000 weight=1;\n}\n\nserver {\n    listen 80;\n    \n    location /v1/ {\n        proxy_pass http://llm_backend;\n        proxy_http_version 1.1;\n        proxy_set_header Connection '';\n        proxy_read_timeout 300s;\n    }\n}\n```\n\n### 云服务商 SDK\n\n```python\n# 阿里云百炼\nfrom dashscope import Generation\n\nresponse = Generation.call(\n    model='qwen-turbo',\n    messages=[{'role': 'user', 'content': '你好'}]\n)\n\n# 火山引擎\nfrom volcengine.maas import MaasService\n\nmaas = MaasService('maas-api.ml-platform-cn-beijing.volces.com')\nresp = maas.chat(model_id, messages)\n```"
+            }
           }
         }
       ]
